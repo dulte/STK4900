@@ -59,5 +59,8 @@ cv.R2=function(lmobj,y=lmobj$y,x=lmobj$x){
   R2kryss
 }
 
+plot(no2data)
+
+
 fit.multi = lm(log.no2~log.cars+temp+wind.speed+log.cars:temp+log.cars:wind.speed+temp:wind.speed+log.cars:temp:wind.speed,data=no2data)
 anova(fit.multi)

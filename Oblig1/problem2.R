@@ -2,9 +2,15 @@ blood <- read.table("http://www.uio.no/studier/emner/matnat/math/STK4900/v19/man
 
 #a)
 summary(blood)
-boxplot(blodtr~alder,data=blood,ylab="Blodtrykk",xlab="Aldersgruppe",col=topo.colors(3))
-legend("topleft",inset=.0,title="Aldersgruppe",c("30-45 år","46-59 år", "60-75år"),
-       fill=topo.colors(3),horiz=T,cex=0.8)
+summary(subset(blood,alder==1))
+summary(subset(blood,alder==2))
+summary(subset(blood,alder==3))
+
+boxplot(blodtr~alder,data=blood,ylab="Blood Pressure [mmHg]",xlab="Age Group",col=topo.colors(3))
+legend("topleft",inset=.0,title="Age Group",c("30-45 Years","46-59 Years", "60-75 Years"),
+       fill=topo.colors(3),horiz=T,cex=0.6)
+
+
 #We can clearly see that there is a difference in the median
 #of the three age groups, with increasing age leading to increase systolic blood pressure
 #The middle age group is quite wide, and overlaps alot with the two other.
