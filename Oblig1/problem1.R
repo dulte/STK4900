@@ -3,11 +3,13 @@ summary(no2data)
 
 
 #a)
+plot(no2data)
+
 summary(no2data$log.no2)
 summary(no2data$log.cars)
 
-boxplot(no2data$log.no2)
-boxplot(no2data$log.cars)
+boxplot(no2data$log.no2, ylab="log.no2",col="green")
+boxplot(no2data$log.cars, ylab="log.cars",col="red")
 
 plot(log.no2~log.cars,data=no2data)
 
@@ -20,7 +22,7 @@ plot(log.no2~log.cars,data=no2data)
 fit = lm(log.no2~log.cars,data=no2data)
 summary(fit)
 
-plot(log.no2~log.cars,data=no2data)
+plot(log.no2~log.cars,data=no2data,col="grey")
 abline(fit)
 
 
@@ -41,13 +43,18 @@ abline(fit.standardres)
 #Sees that the variance is decreasing!
 
 #Check for normality
-hist(fit$res)
+hist(fit$res,breaks=(1+3.322*log(length(fit$res))))
+boxplot(fit$res)
 qqnorm(fit$res);qqline(fit$res)
 
 #We see that the residuals are not normal
 
 #d)
-cv.R2=function(lmobj,y=lmobj$y,x=lmobj$x){
+plot(no2data)
+
+
+cv.R2=function(lmobj,y=lmobj$y,x=lmobj$x)
+{
   a=t(x)%*%x
   d=diag(1/eigen(a)$values)
   e=eigen(a)$vector
@@ -59,8 +66,16 @@ cv.R2=function(lmobj,y=lmobj$y,x=lmobj$x){
   R2kryss
 }
 
-plot(no2data)
 
 
-fit.multi = lm(log.no2~log.cars+temp+wind.speed+log.cars:temp+log.cars:wind.speed+temp:wind.speed+log.cars:temp:wind.speed,data=no2data)
+
+
+fit.multi = lm(log.no2~log.cars+temp+wind.speed+hour.of.day,data=no2data, x=T, y=T)
+summary(fit.multi)
 anova(fit.multi)
+
+r2 = cv.R2(fit.multi)
+
+#TODO: Do forward selection with cv.R2
+
+#e) 
