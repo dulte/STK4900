@@ -17,7 +17,9 @@
 \usepackage{hyperref}
 \usepackage{titling}
 \usepackage{marvosym }
-\usepackage{subcaption}
+%\usepackage{subcaption}
+\usepackage{subfig}
+\usepackage{graphicx}
 \usepackage[noabbrev]{cleveref}
 \usepackage{cite}
 \usepackage{todonotes}
@@ -46,48 +48,177 @@
 \maketitle
 
 
+
+
 \section*{Exercise 1}
+
 
 
 \subsection*{a)}
 \begin{table}[ht]
 \centering
-\begin{tabular}{rlllll}
-  \hline
- &    log.no2 &    log.cars &      temp &   wind.speed &  hour.of.day \\ 
-  \hline
-1 & Min.   :1.224   & Min.   :4.127   & Min.   :-18.6000   & Min.   :0.300   & Min.   : 1.00   \\ 
-  2 & 1st Qu.:3.214   & 1st Qu.:6.176   & 1st Qu.: -3.9000   & 1st Qu.:1.675   & 1st Qu.: 6.00   \\ 
-  3 & Median :3.848   & Median :7.425   & Median :  1.1000   & Median :2.800   & Median :12.50   \\ 
-  4 & Mean   :3.698   & Mean   :6.973   & Mean   :  0.8474   & Mean   :3.056   & Mean   :12.38   \\ 
-  5 & 3rd Qu.:4.217   & 3rd Qu.:7.793   & 3rd Qu.:  4.9000   & 3rd Qu.:4.200   & 3rd Qu.:18.00   \\ 
-  6 & Max.   :6.395   & Max.   :8.349   & Max.   : 21.1000   & Max.   :9.900   & Max.   :24.00   \\ 
+\begin{tabular}{cc}
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex]
+log.no2 &    log.cars  \\ 
+\hline \\[-1.8ex] 
+Min.   :1.224   & Min.   :4.127  \\ 
+1st Qu.:3.214   & 1st Qu.:6.176  \\ 
+Median :3.848   & Median :7.425   \\ 
+Mean   :3.698   & Mean   :6.973   \\ 
+3rd Qu.:4.217   & 3rd Qu.:7.793   \\ 
+Max.   :6.395   & Max.   :8.349     \\ 
    \hline
 \end{tabular}
+\caption{Summary of the main features of \textit{log.no2} and \textit{log.cars}}\label{tab:sum_no2_cars}
 \end{table}
 
 
 
-% Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
-% Date and time: lø., mars 09, 2019 - kl. 14.53 +0100
-\begin{table}[!htbp] \centering 
-  \caption{} 
-  \label{} 
-\begin{tabular}{@{\extracolsep{5pt}}lccccccc} 
-\\[-1.8ex]\hline 
-\hline \\[-1.8ex] 
-Statistic & \multicolumn{1}{c}{N} & \multicolumn{1}{c}{Mean} & \multicolumn{1}{c}{St. Dev.} & \multicolumn{1}{c}{Min} & \multicolumn{1}{c}{Pctl(25)} & \multicolumn{1}{c}{Pctl(75)} & \multicolumn{1}{c}{Max} \\ 
-\hline \\[-1.8ex] 
-log.no2 & 500 & 3.698 & 0.751 & 1.224 & 3.214 & 4.217 & 6.395 \\ 
-log.cars & 500 & 6.973 & 1.087 & 4.127 & 6.176 & 7.793 & 8.349 \\ 
-temp & 500 & 0.847 & 6.525 & $-$18.600 & $-$3.900 & 4.900 & 21.100 \\ 
-wind.speed & 500 & 3.056 & 1.784 & 0.300 & 1.675 & 4.200 & 9.900 \\ 
-hour.of.day & 500 & 12.382 & 6.803 & 1 & 6 & 18 & 24 \\ 
-\hline \\[-1.8ex] 
-\end{tabular} 
-\end{table} 
+We are looking at the variables \textit{log.no2} and \textit{log.cars}, which represents the logarithm of the measured concentration of NO$_{2}$ and the logarithmic number of cars per hour. Table \ref{tab:sum_no2_cars} shows a numerical summary of \textit{log.no2} and \textit{log.cars}. Looking at \textit{log.no2} we see that the mean is close to the median, and that they both are more or less equidistant from \textit{min} and \textit{max}, and from the first and third quadrant. This indicates that the distribution is almost symmetric, with a slight skew. Looking at \textit{log.car} we see that this is no longer the case. The mean and median is more different and lay closer to $max$ and the third quadrant \todo{check that it is called quadrant or quarter}. This means that this distribution is very skewed.
+
+
+
+
+\begin{figure*}[!htbp]
+\centering
+\begin{tabular}{@{}ccc@{}}
+\subfloat[Box plot of the distribution of \textit{log.no2}]{\includegraphics[width=0.5\textwidth]{box_no2.png}} & 
+\subfloat[Box plot of the distribution of \textit{log.cars}]{\includegraphics[width=0.5\textwidth]{box_cars.png}} &
+\end{tabular}
+\caption[]{Box plots showing the distributions for \textit{log.no2} and \textit{log.cars}.}
+\label{fig:box_no2_cars}
+\end{figure*}
+
+
+Our ideas about the distribution we got from the numerical summaries, tab. \ref{tab:sum_no2_cars}, is confirmed by the box plots of the distribution found in fig. \ref{fig:box_no2_cars}. Here we can see that \textit{log.no2} is more or less symmetric, while \textit{log.cars} is heavily skewed towards higher values.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[scale=0.5]{no2_cars.png}
+\caption{Scatter plot showing the relation between \textit{log.no2} and \textit{log.cars}.}\label{fig:no2_vs_cars}
+\end{figure}
+
+We can look at the relationship between \textit{log.no2} and \textit{log.cars}. If we look at fig. \ref{fig:no2_vs_cars} we see that there looks to be a dependence. We are going to try to fit a linear model to the data, but looking at the plot we see that there seems to be a higher clustering for higher values, which we expect from fig. \ref{fig:box_no2_cars}. This means that there seems to be a larger spread for lower values than for the higher, making some of the assumptions used for a linear regression false. We will look at that later.
+
+
+
+\subsection*{b)}
+
+We are no going to fit a linear model to our $log.no2$ and $log.cars$.
+
+
+\begin{table}[!htbp]
+\centering
+\begin{tabular}{rrrrr}
+  \hline
+ & Estimate & Std. Error & t value & Pr($>$|$t$|) \\ 
+  \hline
+(Intercept) & 1.2331 & 0.1875 & 6.57 & 0.0000 \\ 
+  log.cars & 0.3535 & 0.0266 & 13.30 & 0.0000 \\ 
+   \hline
+   \multicolumn{5}{l}{Residual standard error: 0.6454 on 498 degrees of freedom} \\
+   \multicolumn{5}{l}{Multiple R-squared:  0.2622,	Adjusted R-squared:  0.2607} \\
+   \multicolumn{5}{l}{F-statistic:   177 on 1 and 498 DF,  p-value: < 2.2e-16} \\ \hline
+\end{tabular}
+\caption{Summary of the linear model for $log.no2$ and $log.cars$.}\label{tab:no2_cars_fit}
+\end{table}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[scale=0.5]{no2_cars_reg.png}
+\caption{The linear model superimposed on the scatter plot from fig. \ref{fig:no2_vs_cars}}\label{fig:no2_vs_cars_fit}
+\end{figure}
+
+We start by looking at fig. \ref{fig:no2_vs_cars_fit}. We can see that the line representing the linear model seems to be a good fit, but the residuals are quite large. If we look at the numerical summary in tab. \ref{tab:no2_cars_fit} we see that we get the model
+
+\begin{equation}
+log.no2 = 1.2331 + 0.3535\cdot log.cars + \epsilon.
+\end{equation}
+
+This means that given no cars on the road we expect that $log.no2 = 1.2331$, and with each additional (logarithmic) car per hour, $log.no2$ increase by $0.3535$. Looking at the p-value of $p \approx 0$ we can conclude that the linear fit is significant. But if we look at the $R^2 = 0.2622$ we see that this value is rather low. This can indicate that the data doesn't have a linear relationship -- which our p-value indicates that our data have -- or that $log.no2$ isn't described by $log.cars$ alone.
+
+
+\subsection*{c)}
+As mentioned above, the there seems to be a bigger spread in the data in fig. \ref{fig:no2_vs_cars_fit} for lower values than for higher ones. This is one of the things we need to look at now. 
+
+For a linear model
+
+\begin{equation}
+y_i = \alpha + \beta_i x_i + \epsilon_i,
+\end{equation}
+
+where $\epsilon_i$ is the residuals, we need to have some assumptions.
+
+
+\subsubsection*{Linearity}
+For a linear regression one of the most important assumptions is that the model is linear in the predictor. We are going to check this with a  component-plus-residual plot, CPR plot. This is where we plot the partial residuals $\beta_i x_i + r_i$ against the predictor $x_i$. Since we have a model with only one predictor, this will look like our scatter plot. But R also does a smoothing of the data so that we can look at how it compares to a straight line.
+
+
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[scale=0.5]{cpr_cars.png}
+\caption{Component-plus-residual plot of $log.cars$.}\label{fig:cpr}
+\end{figure}
+
+From fig. \ref{fig:cpr} we see that the data is somewhat linear. There is some deviation from linearity for the lower values, but  the deviation is not so great that we say that the model is non-linear.
+
+
+\subsubsection*{Homoscedasticity}
+For our model we want our residuals to be normally distributed with the same distribution independent of the value of $log.cars$. To check this we are going to plot the standardized residuals -- from a R function -- against the fitted values. We expect that the residuals there are random around a mean for all the fitted values, meaning that we can fit a straight, horizontal line  to the data. 
+	
+\begin{figure}[!htbp]
+\centering
+\includegraphics[scale=0.5]{stand_res.png}
+\caption{Figure showing $\sqrt{|\text{Standardized Residuals}|}$ against the fitted values.}\label{fig:stand_res}
+\end{figure}
+
+If we look at fig. \ref{fig:stand_res} we see that the fitted line is not horizontal, but instead decreasing. This indicates that the residuals as smaller for larger values of $log.cars$. This seems to verify what we expected from the start: That there was a larger spread for the smaller values of $log.cars$ than for the larger.
+
+
+\subsubsection*{Normality} 
+The last assumption we have is that the residuals are normal. 
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[scale=0.5]{res_box.png}
+\caption{Figure a box plot of the residuals.}\label{fig:res_box}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[scale=0.5]{res_hist.png}
+\caption{Figure the histogram of the residuals.}\label{fig:res_hist}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[scale=0.5]{res_qq.png}
+\caption{Figure a QQ-plot of the residuals.}\label{fig:res_qq}
+\end{figure}
+
+
+Looking at fig. \ref{fig:res_box} we see that the distribution looks more or less normal, but the median is somewhat of center, which indicates skewness. Fig. \ref{fig:res_hist} shows that this is the case. The distribution is far from normal, and seems to be skew towards the negative values. From both these figures we can see that neither the median nor the mean is $0$, which is something we would like it to be.
+
+The last nail in the coffin is fig. \ref{fig:res_qq}. If the residuals were normally distributed, we would expect a the points to follow the straight line. The S-shape indicates a light tail, and the bend we see in the middle indicates a left skew -- which corresponds well with our other plots --. This means that our assumptions that the residuals are normally distributed is false.
+
+
+So we have seen that while our model is close to linear, the residuals are neither homoscedastic nor normal. So to use a linear model for our data is difficult to justify.
+
+
+
+
+
+
+
+
+
+
+
 
 \section*{Exercise 2}
+\todo[inline]{Add titles to figs}
 \subsection*{a)}
 
 The data we are looking at is the systolic blood pressure for $36$ people divided into three groups determined by their age. These groups are $30-45$ years, $46-59$ years and $60-75$ years. 
