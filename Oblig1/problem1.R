@@ -114,21 +114,21 @@ summary(fit.multi_no_log)
 #CPR plot to check linearity
 library(car)
 crPlots(fit.multi,terms=~log.cars + log(wind.speed) + temp + hour.of.day)
-title("CPR plot of log.cars")
+
 
 #Looks more or less linear, with some diviation for lower values
 
 #Check of Homoscedasticity
-standardres_multi = rstandard(fit.multi)
-fit_multi.standardres = lm(sqrt(abs(standardres_multi))~fit.multi$fit)
-plot(fit.multi$fit,sqrt(abs(standardres_multi)),xlab="Fitted Values",ylab="sqrt(|Standard Residuals|)")
+standardres.multi = rstandard(fit.multi)
+fit.multi.standardres = lm(sqrt(abs(standardres.multi))~fit.multi$fit)
+plot(fit.multi$fit,sqrt(abs(standardres.multi)),xlab="Fitted Values",ylab="sqrt(|Standard Residuals|)")
 abline(fit_multi.standardres)
 title("Homoscedasticity Plot with Standardized Residuals of Full Model")
 
 #Sees that the variance is decreasing!
 
 #Check for normality
-hist(fit$res,breaks=(1+3.322*log(length(fit$res))),col="blue")
-boxplot(fit$res,col="grey",ylab="Residual")
+hist(fit.multi$res,breaks=(1+3.322*log(length(fit.multi$res))),col="blue")
+boxplot(fit.multi$res,col="grey",ylab="Residual")
 title("Distribution of the Residuals")
-qqnorm(fit$res);qqline(fit$res)
+qqnorm(fit.multi$res);qqline(fit.multi$res)
