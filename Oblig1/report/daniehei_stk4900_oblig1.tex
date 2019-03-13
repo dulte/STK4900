@@ -139,7 +139,7 @@ log.no2 = 1.2331 + 0.3535\cdot log.cars + \epsilon.
 This means that given no cars on the road we expect that $log.no2 = 1.2331$, and with each additional (logarithmic) car per hour, $log.no2$ increase by $0.3535$. Looking at the p-value of $p \approx 0$ we can conclude that the linear fit is significant. But if we look at the $R^2 = 0.2622$ we see that this value is rather low. This can indicate that the data doesn't have a linear relationship -- which our p-value indicates that our data have -- or that $log.no2$ isn't described by $log.cars$ alone.
 
 
-\subsection*{c)}
+\subsection*{c)}\label{sec:c}
 As mentioned above, the there seems to be a bigger spread in the data in fig. \ref{fig:no2_vs_cars_fit} for lower values than for higher ones. This is one of the things we need to look at now. 
 
 For a linear model
@@ -208,17 +208,96 @@ So we have seen that while our model is close to linear, the residuals are neith
 
 
 
+\subsection*{d)}
+
+Our data consists of more possible predictor variables than just $log.cars$. We have three more variables we can use in a multiple regression. To see which if these variables we are going to use, we are going to do a \textit{forward selection} of the variables and their logarithm: We start by making a linear model with each predictor variable (and their logarithm), using \textbf{Cross Validated} $R^2$ we will find the best model. We then goes through the remaining variables, adding that to the best predictor and see which variable improves the fit. This is done recursively until there is no improvement in the cross validated $R^2$. We then have our best model. 
+
+Due to my lack in familiarity with R, this was done in the stupid way of check each combination one by one. 
+
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[scale=0.5]{r2_forward.png}
+\caption{Figure of the increase in the cross validated $R^2$ as variable are added. The x-axis shows which predictor variable is added to the model.}\label{fig:r2}
+\end{figure}
+
+
+We see from fig. \ref{fig:r2} that as we add more predictor variables the model becomes better and better. We also notice that to get the best model we also had to take the logarithm of $wind.speed$. The model we are left with then is found in tab. \ref{tab:r2},and can be written as
+
+\begin{equation}\label{eq:full}
+log.no2 = 1.07 + 0.46\cdot log.cars - 0.42\cdot \log(wind.speed) - 0.03\cdot temp - 0.01 \cdot hour.of.day + \epsilon
+\end{equation}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrrr}
+  \hline
+ & Estimate & Std. Error & t value & Pr($>$|$t$|) \\ 
+  \hline
+(Intercept) & 1.0709 & 0.1710 & 6.26 & 0.0000 \\ 
+  log.cars & 0.4572 & 0.0279 & 16.37 & 0.0000 \\ 
+  log(wind.speed) & -0.4194 & 0.0364 & -11.53 & 0.0000 \\ 
+  temp & -0.0267 & 0.0038 & -6.96 & 0.0000 \\ 
+  hour.of.day & -0.0123 & 0.0044 & -2.81 & 0.0051 \\ 
+   \hline
+      \multicolumn{5}{l}{Residual standard error: 0.542 on 495 degrees of freedom} \\
+   \multicolumn{5}{l}{Multiple R-squared:  0.483,	Adjusted R-squared:  0.479 } \\
+   \multicolumn{5}{l}{F-statistic:  116 on 4 and 495 DF,  p-value: <2e-16} \\ \hline
+\end{tabular}
+\caption{Table showing the final model for our multiple regression. This is the model which gives the best cross validation $R^2$.}\label{tab:r2}
+\end{table}
+
+
+\subsection*{e)}
+
+\subsubsection*{Checking our Assumptions}
+
+We will now check if our model assumptions are correct. We will do the exact same analysis as in exercise 1c. We will do it a bit quicker now since we have done it once before.
+
+
+\begin{figure*}[!htbp]
+\centering
+\begin{tabular}{@{}ccc@{}}
+\subfloat[CPR plot for the full model]{\includegraphics[width=0.5\textwidth]{cpr_full.png}} & 
+\subfloat[Standard Residual plot for the full model]{\includegraphics[width=0.5\textwidth]{stand_full.png}} &
+\end{tabular}
+\caption[]{Plots judging the linearity and homoscedasticity of the residuals of the full model.}
+\label{fig:cpr_and_stand}
+\end{figure*}
+
+\begin{figure*}[!htbp]
+\centering
+\begin{tabular}{@{}cccc@{}}
+\subfloat[Box plot for the residuals for the full model]{\includegraphics[width=0.33\textwidth]{box_full.png}} & 
+\subfloat[Histogram for the residuals for the full model]{\includegraphics[width=0.33\textwidth]{hist_full.png}} &
+\subfloat[QQ plot for the residuals for the full model]{\includegraphics[width=0.33\textwidth]{qq_full.png}} &
+\end{tabular}
+\caption[]{Plots judging the normality of the residuals of the full model.}
+\label{fig:normal_full}
+\end{figure*}
 
 
 
+Fig. \ref{fig:cpr_and_stand}a shows that $temp$ and $hour.of.day$ seems to be more or less linear, while $log wind.speed$ has some small deviations from linearity. It is close enough that we can say that our model is linear.
 
+Fig. \ref{fig:cpr_and_stand}b shows that we still have the problem that the residuals are decreasing, which is problematic for our assumption of homoscedasticity.
+
+From the plots in fig. \ref{fig:normal_full} we see that the residuals are a bit non-normal still. If we only look at the values close to the mean we see that the QQ-plot indicates these to be normal. It is the outliers -- as judged by the box plot -- that seems to be breaking normality. To excluding these, we can say that the residuals are normally distributed for the full model.
+
+
+\subsubsection*{Interpreting our Model}
+If we look at \eqref{eq:full} and tab. \ref{tab:r2} we can see that the base value of $log.no2$ is $1.07$, and for each (logarithmic) car per hour this value is increased with $0.46$, and with each extra (logarithm) $m/s$ of wind speed it is decreased with $0.42$. With $1^{\circ}$C increase in temperature the $log.no2$ is decreased with $0.03$. And lastly with one later in the day, it is decreased with $0.01$.
+
+We see that we get a $R^2$ value of $0.483$, which is significantly higher than with our model in tab. \ref{tab:sum_no2_cars}. It is still not close to $1$, so there is some other factors with helps determine $log.no2$.
+
+So all in all, we have a good model, which fullfill most of our assumptions of a linear model.
 
 
 
 
 
 \section*{Exercise 2}
-\todo[inline]{Add titles to figs}
+
 \subsection*{a)}
 
 The data we are looking at is the systolic blood pressure for $36$ people divided into three groups determined by their age. These groups are $30-45$ years, $46-59$ years and $60-75$ years. 

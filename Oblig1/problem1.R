@@ -72,12 +72,63 @@ cv.R2=function(lmobj,y=lmobj$y,x=lmobj$x)
 
 
 
-fit.multi = lm(log.no2~log.cars+temp+wind.speed+hour.of.day,data=no2data, x=T, y=T)
+
+
+
+
+# Muliple regression with increasing Cross Validated R2
+fit.multi = lm(log.no2~log.cars,data=no2data, x=T, y=T)
+cv.R2(fit.multi)
+fit.multi = lm(log.no2~log.cars + log(wind.speed),data=no2data, x=T, y=T)
+cv.R2(fit.multi)
+fit.multi = lm(log.no2~log.cars + log(wind.speed) + temp,data=no2data, x=T, y=T)
+cv.R2(fit.multi)
+fit.multi = lm(log.no2~log.cars + log(wind.speed) + temp + hour.of.day,data=no2data, x=T, y=T)
+cv.R2(fit.multi)
+
 summary(fit.multi)
-anova(fit.multi)
 
-r2 = cv.R2(fit.multi)
 
-#TODO: Do forward selection with cv.R2
+
+#Plot of the CVR2 against the model added to the fit
+models_added = c("log.cars","log wind.speed","temp","hour.of.day")
+models_added = factor(models_added,levels=models_added)
+r2_found = c(0.256,0.418,0.466,0.472)
+
+
+plot(models_added,r2_found,ylab="Cross Validated R2",xlab="Variable Added to the Model")
+title("Forward Selection for NO2")
+
+
+
+#Model with all the predictor variables, with no log 
+fit.multi_no_log = lm(log.no2~log.cars+temp+wind.speed+hour.of.day,data=no2data, x=T, y=T)
+cv.R2(fit.multi_no_log)
+summary(fit.multi_no_log)
+
 
 #e) 
+
+#Checks the model assumptions. Copy past of c)
+
+#CPR plot to check linearity
+library(car)
+crPlots(fit.multi,terms=~log.cars + log(wind.speed) + temp + hour.of.day)
+title("CPR plot of log.cars")
+
+#Looks more or less linear, with some diviation for lower values
+
+#Check of Homoscedasticity
+standardres_multi = rstandard(fit.multi)
+fit_multi.standardres = lm(sqrt(abs(standardres_multi))~fit.multi$fit)
+plot(fit.multi$fit,sqrt(abs(standardres_multi)),xlab="Fitted Values",ylab="sqrt(|Standard Residuals|)")
+abline(fit_multi.standardres)
+title("Homoscedasticity Plot with Standardized Residuals of Full Model")
+
+#Sees that the variance is decreasing!
+
+#Check for normality
+hist(fit$res,breaks=(1+3.322*log(length(fit$res))),col="blue")
+boxplot(fit$res,col="grey",ylab="Residual")
+title("Distribution of the Residuals")
+qqnorm(fit$res);qqline(fit$res)
