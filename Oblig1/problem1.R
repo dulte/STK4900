@@ -50,9 +50,9 @@ qqnorm(fit$res);qqline(fit$res)
 #We see that the residuals are not normal
 
 #d)
-plot(no2data)
 
 
+# Function for Cross Validated R2 as written by the lecturer
 cv.R2=function(lmobj,y=lmobj$y,x=lmobj$x)
 {
   a=t(x)%*%x

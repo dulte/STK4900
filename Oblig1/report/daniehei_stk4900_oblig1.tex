@@ -32,6 +32,7 @@
 \lstset{language=c++}
 \lstset{alsolanguage=[90]Fortran}
 \lstset{alsolanguage=Python}
+\lstset{alsolanguage=R}
 \lstset{basicstyle=\small}
 \lstset{backgroundcolor=\color{white}}
 \lstset{frame=single}
@@ -282,15 +283,15 @@ Fig. \ref{fig:cpr_and_stand}a shows that $temp$ and $hour.of.day$ seems to be mo
 
 Fig. \ref{fig:cpr_and_stand}b shows that we still have the problem with varying residuals, which is problematic for our assumption of homoscedasticity.
 
-From the plots in fig. \ref{fig:normal_full} we see that the residuals are a bit non-normal still. If we only look at the values close to the mean we see that the QQ-plot indicates these to be normal. It is the outliers -- as judged by the box plot -- that seems to be breaking normality. To excluding these, we can say that the residuals are normally distributed for the full model.
+From the plots in fig. \ref{fig:normal_full} we see that the residuals are a bit non-normal still. If we only look at the values close to the mean we see that the QQ-plot indicates these to be normal. It is the outliers -- as judged by the box plot -- that seems to be breaking normality. Excluding these, we can say that the residuals are normally distributed for the full model. 
 
 
 \subsubsection*{Interpreting our Model}
 If we look at \eqref{eq:full} and tab. \ref{tab:r2} we can see that the base value of $log.no2$ is $1.07$, and for each (logarithmic) car per hour this value is increased with $0.46$, and with each extra (logarithm) $m/s$ of wind speed it is decreased with $0.42$. With $1^{\circ}$C increase in temperature the $log.no2$ is decreased with $0.03$. And lastly with one hour later in the day, it is decreased with $0.01$.
 
-We see that we get a $R^2$ value of $0.483$, which is significantly higher than with our model in tab. \ref{tab:sum_no2_cars}. It is still not close to $1$, so there is some other factors with helps determine $log.no2$.
+We see that we get a $R^2$ value of $0.483$, which is significantly higher than with our model in tab. \ref{tab:sum_no2_cars}. It is still not close to $1$, so there is some other factors that helps determine $log.no2$.
 
-So all in all, we have a good model, which fullfill most of our assumptions of a linear model.
+So all in all, we have a good model, which fulfill most of our assumptions of a linear model.
 
 
 
@@ -414,11 +415,28 @@ This means that if patient is in group 2, then $x_{1,i} = 1$ and $x_{2,i} = 0$, 
 
 In tab. \ref{tab:blood_reg} we see the summary of the regression model with the age groups as a categorical predictor variable. The intercept in the table is the mean of the youngest age group $\mu_1 = 122.167$ --  our reference group --. The slopes of the two variables can be interpreted as how much the mean of blood pressure increases if you are in that age group, compared to the reference group. E.g. if you are in age group 2, we will expect your blood pressure to be $33.0$ mmHg higher than the mean of the youngest group, i.e. it is expected to be $155.167$ mmHg.
 
-We can look at the p-values of tab. \ref{tab:blood_reg} we see that the p-value for age group 3 is $p=0.001$. This means that the increase of $33$ mmHg is significant. But for group 2 the p-value is just $0.0742$, which means that this increase is not significant, so we can not say that we have an $17$ mmHg increase compared  with the reference. This might have to do with what we see in the box plots \ref{fig:blood_box}, where the distribution of the second age group is very wide. The reason might also be due to a non linear dependence on age.
+We can look at the p-values of tab. \ref{tab:blood_reg} we see that the p-value for age group 3 is $p=0.001$. This means that the increase of $33$ mmHg is significant. But for group 2 the p-value is just $0.0742$, which means that this increase is not significant, meaning that we can't say that this is due to age and not due statistical error. This might have to do with what we see in the box plots \ref{fig:blood_box}, where the distribution of the second age group is very wide. The reason might also be due to a non linear dependence on age.
 
 We also see that we have a low $R^2 = 0.2816$, which means that the blood pressure is not fully described by the age groups.
 
-But all in all we see that the we have a good regression model for group 1 and 3, with the change in group 2 not being significant. So there is some significant variation between the age groups, as we saw with the ANOVA. 
+But all in all we see that the we have a good regression model for group 1 and 3, with the change in group 2 not being significant. So there is some significant variation between the age groups, as we saw with the ANOVA. But while the ANOVA only showed that there was a variation across the different age groups, the linear regression show that we have an increase in the blood pressure for the higher age groups.
+
+\section*{Remark}
+I have collaborated with \textit{Simon Millerjord}. This is especially true for the R code, and plots!
+
+
+\newpage
+\section*{Appendix}
+\subsection*{R Code for Problem 1}
+
+\lstinputlisting{../problem1.R}
+
+\newpage
+
+\subsection*{R Code for Problem 2}
+
+\lstinputlisting{../problem2.R}
+
 
 \end{document}
 
