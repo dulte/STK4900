@@ -35,10 +35,8 @@ title("CPR plot of log.cars")
 #Looks more or less linear, with some diviation for lower values
 
 #Check of Homoscedasticity
-standardres = rstandard(fit)
-fit.standardres = lm(sqrt(abs(standardres))~fit$fit)
-plot(fit$fit,sqrt(abs(standardres)),xlab="Fitted Values",ylab="sqrt(|Standard Residuals|)")
-abline(fit.standardres)
+
+plot(fit,3)
 title("Homoscedasticity Plot with Standardized Residuals")
 
 #Sees that the variance is decreasing!
@@ -119,10 +117,7 @@ crPlots(fit.multi,terms=~log.cars + log(wind.speed) + temp + hour.of.day)
 #Looks more or less linear, with some diviation for lower values
 
 #Check of Homoscedasticity
-standardres.multi = rstandard(fit.multi)
-fit.multi.standardres = lm(sqrt(abs(standardres.multi))~fit.multi$fit)
-plot(fit.multi$fit,sqrt(abs(standardres.multi)),xlab="Fitted Values",ylab="sqrt(|Standard Residuals|)")
-abline(fit_multi.standardres)
+plot(fit.multi,3)
 title("Homoscedasticity Plot with Standardized Residuals of Full Model")
 
 #Sees that the variance is decreasing!

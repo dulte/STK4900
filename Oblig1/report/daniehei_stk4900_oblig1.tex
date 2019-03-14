@@ -75,7 +75,7 @@ Max.   :6.395   & Max.   :8.349     \\
 
 
 
-We are looking at the variables \textit{log.no2} and \textit{log.cars}, which represents the logarithm of the measured concentration of NO$_{2}$ and the logarithmic number of cars per hour. Table \ref{tab:sum_no2_cars} shows a numerical summary of \textit{log.no2} and \textit{log.cars}. Looking at \textit{log.no2} we see that the mean is close to the median, and that they both are more or less equidistant from \textit{min} and \textit{max}, and from the first and third quartiles. This indicates that the distribution is almost symmetric, with a slight skew. Looking at \textit{log.car} we see that this is no longer the case. The mean and median is more different and lay closer to $max$ and the third quartile. This means that this distribution is very skewed.
+We are looking at the variables \textit{log.no2} and \textit{log.cars}, which represents the logarithm of the measured concentration of NO$_{2}$ and the logarithmic number of cars per hour. Table \ref{tab:sum_no2_cars} shows a numerical summary of \textit{log.no2} and \textit{log.cars}. Looking at \textit{log.no2} we see that the mean is close to the median, and that they both are more or less equidistant from \textit{min} and \textit{max}, and from the first and third quartiles. This indicates that the distribution is almost symmetric, with a slight skew. Looking at \textit{log.car} we see that this is no longer the case. The mean and median is more different and lie closer to $max$ and the third quartile. This means that this distribution is very skewed.
 
 
 
@@ -166,7 +166,7 @@ From fig. \ref{fig:cpr} we see that the data is somewhat linear. There is some d
 
 
 \subsubsection*{Homoscedasticity}
-For our model we want our residuals to be normally distributed with the same distribution independent of the value of $log.cars$. To check this we are going to plot the standardized residuals -- from a R function -- against the fitted values. We expect that the residuals there are random around a mean for all the fitted values, meaning that we can fit a straight, horizontal line  to the data. 
+For our model we want our residuals to be normally distributed with the same distribution independent of the value of $log.cars$. To check this we are going to plot the square root of the absolute value of the standardized residuals against the fitted values. We expect that the residuals there are random around a mean for all the fitted values, meaning that we can fit a straight, horizontal line  to the data. 
 	
 \begin{figure}[!htbp]
 \centering
@@ -174,7 +174,7 @@ For our model we want our residuals to be normally distributed with the same dis
 \caption{Figure showing $\sqrt{|\text{Standardized Residuals}|}$ against the fitted values.}\label{fig:stand_res}
 \end{figure}
 
-If we look at fig. \ref{fig:stand_res} we see that the fitted line is not horizontal, but instead decreasing. This indicates that the residuals as smaller for larger values of $log.cars$. This seems to verify what we expected from the start: That there was a larger spread for the smaller values of $log.cars$ than for the larger.
+Looking at fig. \ref{fig:stand_res} we would expect to see a straight line, meaning that residuals have same distribution, but we see that for the lower fitted values, $\sqrt{|\text{Standardized Residuals}|}$ is higher than for higher values. This indicates that the residuals as smaller for larger values of $log.cars$. This seems to verify what we expected from the start: That there was a larger spread for the smaller values of $log.cars$ than for the larger.
 
 
 \subsubsection*{Normality} 
@@ -204,7 +204,7 @@ Looking at fig. \ref{fig:res_box} we see that the distribution looks more or les
 The last nail in the coffin is fig. \ref{fig:res_qq}. If the residuals were normally distributed, we would expect a the points to follow the straight line. The S-shape indicates a light tail, and the bend we see in the middle indicates a left skew -- which corresponds well with our other plots --. This means that our assumptions that the residuals are normally distributed is false.
 
 
-So we have seen that while our model is close to linear, the residuals are neither homoscedastic nor normal. So to use a linear model for our data is difficult to justify.
+So we have seen that while our model is close to linear, the residuals are neither homoscedastic nor normal. So to use a linear model for our data can be difficult to justify.
 
 
 
@@ -212,7 +212,7 @@ So we have seen that while our model is close to linear, the residuals are neith
 
 Our data consists of more possible predictor variables than just $log.cars$. We have three more variables we can use in a multiple regression. To see which if these variables we are going to use, we are going to do a \textit{forward selection} of the variables and their logarithm: We start by making a linear model with each predictor variable (and their logarithm), using \textbf{Cross Validated} $R^2$ we will find the best model. We then goes through the remaining variables, adding that to the best predictor and see which variable improves the fit. This is done recursively until there is no improvement in the cross validated $R^2$. We then have our best model. 
 
-Due to my lack in familiarity with R, this was done in the stupid way of check each combination one by one. 
+Due to my lack in familiarity with R, this was done in the stupid way of checking each combination one by one. 
 
 
 \begin{figure}[!htbp]
@@ -280,13 +280,13 @@ We will now check if our model assumptions are correct. We will do the exact sam
 
 Fig. \ref{fig:cpr_and_stand}a shows that $temp$ and $hour.of.day$ seems to be more or less linear, while $log wind.speed$ has some small deviations from linearity. It is close enough that we can say that our model is linear.
 
-Fig. \ref{fig:cpr_and_stand}b shows that we still have the problem that the residuals are decreasing, which is problematic for our assumption of homoscedasticity.
+Fig. \ref{fig:cpr_and_stand}b shows that we still have the problem with varying residuals, which is problematic for our assumption of homoscedasticity.
 
 From the plots in fig. \ref{fig:normal_full} we see that the residuals are a bit non-normal still. If we only look at the values close to the mean we see that the QQ-plot indicates these to be normal. It is the outliers -- as judged by the box plot -- that seems to be breaking normality. To excluding these, we can say that the residuals are normally distributed for the full model.
 
 
 \subsubsection*{Interpreting our Model}
-If we look at \eqref{eq:full} and tab. \ref{tab:r2} we can see that the base value of $log.no2$ is $1.07$, and for each (logarithmic) car per hour this value is increased with $0.46$, and with each extra (logarithm) $m/s$ of wind speed it is decreased with $0.42$. With $1^{\circ}$C increase in temperature the $log.no2$ is decreased with $0.03$. And lastly with one later in the day, it is decreased with $0.01$.
+If we look at \eqref{eq:full} and tab. \ref{tab:r2} we can see that the base value of $log.no2$ is $1.07$, and for each (logarithmic) car per hour this value is increased with $0.46$, and with each extra (logarithm) $m/s$ of wind speed it is decreased with $0.42$. With $1^{\circ}$C increase in temperature the $log.no2$ is decreased with $0.03$. And lastly with one hour later in the day, it is decreased with $0.01$.
 
 We see that we get a $R^2$ value of $0.483$, which is significantly higher than with our model in tab. \ref{tab:sum_no2_cars}. It is still not close to $1$, so there is some other factors with helps determine $log.no2$.
 
@@ -320,7 +320,7 @@ $60-75$ years & 12 & 155.167 & 27.719 & 110 & 138 & 164 & 214 \\
 \end{table} 
 
 
-If we look at table \ref{tab:blood_summary} we see the numerical summary of the blood pressure of the three age groups, and the group as a whole. From the mean column, we see that mean blood pressure seems to increase with increasing age group. This is also the case for all the other measures see in the table. This seems to indicate that there is some relationship between systolic blood pressure and age. \todo{This may be just repetition of the caption...}
+If we look at table \ref{tab:blood_summary} we see the numerical summary of the blood pressure of the three age groups, and the group as a whole. From the mean column, we see that mean blood pressure seems to increase with increasing age group. This is also the case for all the other measures see in the table. This seems to indicate that there is some relationship between systolic blood pressure and age.
 
 
 \begin{figure}[!htbp]
@@ -332,7 +332,7 @@ If we look at table \ref{tab:blood_summary} we see the numerical summary of the 
 
 From fig. \ref{fig:blood_box} we see that there is a clear increase in blood pressure with age. Both the median, max and min increases with age. This is exactly what we saw in tab. \ref{tab:blood_summary} -- a difference is that in the table the mean was given, while in the box plot the median is given --. What we can see clearer from the plot is that the distributions also become wider as age increase. The interquartile width of the middle age group is quite wide, and overlaps with the other groups. This can make this group a bit more difficult to get a significant result from.
 
-All in all, both the numerical summary, tab. \ref{tab:blood_summary}, and the box plot, fig. \ref{fig:blood_box}, seems to show the same: A increase in systolic blood pressure as age increases.
+All in all, both the numerical summary, tab. \ref{tab:blood_summary}, and the box plot, fig. \ref{fig:blood_box}, seems to show the same: There seems to be variation in systolic blood pressure across the different age groups.
 
 \subsection*{b)}
 
@@ -418,7 +418,7 @@ We can look at the p-values of tab. \ref{tab:blood_reg} we see that the p-value 
 
 We also see that we have a low $R^2 = 0.2816$, which means that the blood pressure is not fully described by the age groups.
 
-But all in all we see that the we have a good regression model for group 1 and 3, with the change in group 2 not being significant. So there is some significant variation between the age groups, as we saw with the ANOVA. \todo{Look over and rewrte...}
+But all in all we see that the we have a good regression model for group 1 and 3, with the change in group 2 not being significant. So there is some significant variation between the age groups, as we saw with the ANOVA. 
 
 \end{document}
 

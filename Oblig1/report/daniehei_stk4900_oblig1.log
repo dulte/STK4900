@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/W32TeX) (preloaded format=pdflatex 2017.4.3)  13 MAR 2019 13:12
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/W32TeX) (preloaded format=pdflatex 2017.4.3)  14 MAR 2019 08:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1199,13 +1199,14 @@ File: r2_forward.png Graphic file (type png)
 Package pdftex.def Info: r2_forward.png used on input line 220.
 (pdftex.def)             Requested size: 326.34341pt x 210.03418pt.
 
-<cpr_full.png, id=100, 652.68843pt x 420.06938pt>
+[6 <./res_qq.png> <./r2_forward.png>]
+<cpr_full.png, id=109, 652.68843pt x 420.06938pt>
 File: cpr_full.png Graphic file (type png)
  <use cpr_full.png>
 Package pdftex.def Info: cpr_full.png used on input line 261.
 (pdftex.def)             Requested size: 212.29312pt x 136.6299pt.
 
-<stand_full.png, id=101, 652.68843pt x 420.06938pt>
+<stand_full.png, id=110, 652.68843pt x 420.06938pt>
 File: stand_full.png Graphic file (type png)
  <use stand_full.png>
 Package pdftex.def Info: stand_full.png used on input line 262.
@@ -1215,7 +1216,6 @@ Overfull \hbox (24.0pt too wide) in paragraph at lines 260--264
  [][] 
  []
 
-[6 <./res_qq.png> <./r2_forward.png>]
 <box_full.png, id=111, 652.68843pt x 420.06938pt>
 File: box_full.png Graphic file (type png)
  <use box_full.png>
@@ -1239,10 +1239,7 @@ Overfull \hbox (31.75644pt too wide) in paragraph at lines 270--275
  []
 
 [7 <./cpr_full.png> <./stand_full.png> <./box_full.png> <./hist_full.png> <./qq
-_full.png>]
-Package hyperref Info: bookmark level for unknown todo defaults to 0 on input l
-ine 323.
- <blood_box.png, id=140, 344.78813pt x 301.8778pt>
+_full.png>] <blood_box.png, id=140, 344.78813pt x 301.8778pt>
 File: blood_box.png Graphic file (type png)
 
 <use blood_box.png>
@@ -1269,13 +1266,13 @@ Package rerunfilecheck Info: File `daniehei_stk4900_oblig1.out' has not changed
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 423.
  ) 
 Here is how much of TeX's memory you used:
- 22260 strings out of 493013
- 403232 string characters out of 6136994
- 515488 words of memory out of 5000000
- 25314 multiletter control sequences out of 15000+600000
+ 22179 strings out of 493013
+ 401353 string characters out of 6136994
+ 512487 words of memory out of 5000000
+ 25235 multiletter control sequences out of 15000+600000
  19810 words of font info for 53 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 62i,16n,122p,817b,712s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 62i,16n,122p,817b,630s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/texlive/2016/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}<c:/texl
 ive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2016/
 texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2016/texmf-dis
@@ -1293,10 +1290,10 @@ frm1000.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pf
 b><c:/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb><c:/texl
 ive/2016/texmf-dist/fonts/type1/public/cm-super/sfti0800.pfb><c:/texlive/2016/t
 exmf-dist/fonts/type1/public/cm-super/sfti1000.pfb>
-Output written on daniehei_stk4900_oblig1.pdf (10 pages, 372848 bytes).
+Output written on daniehei_stk4900_oblig1.pdf (10 pages, 374621 bytes).
 PDF statistics:
- 253 PDF objects out of 1000 (max. 8388607)
- 188 compressed objects within 2 object streams
- 59 named destinations out of 1000 (max. 500000)
+ 251 PDF objects out of 1000 (max. 8388607)
+ 186 compressed objects within 2 object streams
+ 57 named destinations out of 1000 (max. 500000)
  93 words of extra memory for PDF output out of 10000 (max. 10000000)
 
