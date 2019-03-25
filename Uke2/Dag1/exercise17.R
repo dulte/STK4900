@@ -14,6 +14,12 @@ fit.smoke=glm(chd69~smoke,data=wcgs,family=binomial)
 print(fit.smoke)
 
 
+fit.smoke.OR = exp(fit.smoke$coefficients["smoke"])
+
+#The OR computed from the regression is the same as that computed in a)
+
 #c)
 fit.age=glm(chd69~age,data=wcgs,family=binomial)
 print(fit.age)
+fit.age.OR_1 = exp(fit.smoke$coefficients["age"])
+fit.age.OR_10 = exp(fit.smoke$coefficients["age"]*10)
