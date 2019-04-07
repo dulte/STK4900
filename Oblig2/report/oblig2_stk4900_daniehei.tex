@@ -1,0 +1,170 @@
+\documentclass[a4paper,norsk, 10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage[norsk]{babel}
+\usepackage{a4wide}
+\usepackage{color}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{amssymb}
+\usepackage[dvips]{epsfig}
+\usepackage[toc,page]{appendix}
+\usepackage[T1]{fontenc}
+\usepackage{cite} % [2,3,4] --> [2--4]
+\usepackage{shadow}
+\usepackage{hyperref}
+\usepackage{titling}
+\usepackage{marvosym }
+\usepackage{subcaption}
+\usepackage[noabbrev]{cleveref}
+\usepackage{cite}
+\usepackage{todonotes}
+
+
+\setlength{\droptitle}{-10em}   % This is your set screw
+
+\setcounter{tocdepth}{2}
+
+\lstset{language=c++}
+\lstset{alsolanguage=[90]Fortran}
+\lstset{alsolanguage=Python}
+\lstset{basicstyle=\small}
+\lstset{backgroundcolor=\color{white}}
+\lstset{frame=single}
+\lstset{stringstyle=\ttfamily}
+\lstset{keywordstyle=\color{red}\bfseries}
+\lstset{commentstyle=\itshape\color{blue}}
+\lstset{showspaces=false}
+\lstset{showstringspaces=false}
+\lstset{showtabs=false}
+\lstset{breaklines}
+\title{STK4900 Oblig 2}
+\author{Daniel Heinesen, daniehei}
+\begin{document}
+\maketitle
+
+\section{Problem 1}
+\subsection{a)}
+We have a data set where the outcome is whether the female crab has one or more satellites $y = 1$, or none $y=0$. We are looking for a regression that can, given the covariants, give us a probability that the female crab have satellites. This means that we are looking for a regression model that gives us a probability for a binary outcome. The best choice for such a model is a logistic regression model
+\begin{equation}
+p(x_1,...,x_p) = \frac{\exp(\beta_0 + \beta_1 x_1 + ... + \beta_n x_n)}{1+\exp(\beta_0 + \beta_1 x_1 + ... + \beta_n x_n)},
+\end{equation}
+where $p$ is the desired probability, $x_i$ the covariates and $\beta_i$ their fitted coefficients\todo{Is that the best way to describe  $\beta_i$?}.
+
+\subsection{b)}
+
+We want to find the odds ratio between crabs that differ with one centimetre in with. We know that with width as the only covariant, we define the odds as 
+
+\begin{equation}
+\frac{p(x)}{1-p(x)} = \exp(\beta_0 + \beta_1 x).
+\end{equation}
+From this we get the odds ratio for a difference in one centimetre
+\begin{equation}
+OR = \frac{p(x+1)/[1-p(x+1)]}{p(x)/[1-p(x)]} = \frac{\exp(\beta_0 + \beta_1\cdot (x+1))}{\exp(\beta_0 + \beta_1 x)} = \exp(\beta_1\cdot 1) = \exp(\beta_1).
+\end{equation}
+
+
+\begin{table}[!ht]
+\centering
+\begin{tabular}{rrrrr}
+  \hline
+ & Estimate & Std. Error & z value & Pr($>$|$z$|) \\ 
+  \hline
+(Intercept) & -12.3508 & 2.6287 & -4.70 & 0.0000 \\ 
+  width & 0.4972 & 0.1017 & 4.89 & 0.0000 \\ 
+   \hline
+\end{tabular}
+\caption{Summary of the logical regression done the satellite crabs, with width as the only covariant.}\label{tab:crab_width}
+\end{table}
+
+We get the $\beta$'s from the logical regression found in table \ref{tab:crab_width}. From this we see that 
+\begin{equation}
+OR = \exp(0.4972) = 1.64.
+\end{equation}
+This means that odds of a female crab having satellite males increase by $64\%$ if the width of female increases by $1$ cm.
+
+If $p(1) = p(x+1)$ and $p(0)=p(x)$ are small, we can approximate the odds ratio with the relative risk $RR = p(1)/p(0)$. In this case we have that $p(1) = 6.8\cdot 10^{-6}$ and $p(0) = 4.1 \cdot 10^{-6}$, which means that both are very small. This means that we can assume that $RR \approx OR$. And comparing them $OR = 1.6367$ and $RR = 1.6487$ we see that this is correct.
+
+Since we know that 
+\begin{equation}
+t = \frac{\beta}{se(\beta)}
+\end{equation}
+is close to normally distributed, we can use this to find a confidence interval for the odds ratio. We simply do this by calculating the confidence interval for $\beta_1$ and then taking $\exp$ of this interval. 
+
+\begin{table}[!ht]
+\centering
+\begin{tabular}{rrrr}
+  \hline
+ & expcoef & lower & upper \\ 
+  \hline
+(Intercept) & 4.33e-06 & 2.50-08 & 0.00075 \\ 
+  width & 1.64 & 1.35 & 2.01 \\ 
+   \hline
+\end{tabular}
+\caption{Confidence interval for the odds ratio for crabs differing by one cm in width.}\label{tab:crabs_OR_CI}
+\end{table}
+
+From tab. \ref{tab:crabs_OR_CI} we see that we get a confidence interval $CI = (1.35,2.01)$. Since $1$ is outside of this interval, we can say that width gives an significant increase in the probability of satellites. 
+
+\subsection{c)}
+
+\subsection{d)}
+\subsection{e)}
+
+
+\section{Problem 2}
+\subsection{a)}
+We have an outcome, medals, which is a count outcome, and we therefore assume that the count is distributed with a Poisson distribution $Y_i ~ Po(\lambda_i)$. Such a distribution is parametrized with a parameter $\lambda$, the rate. In our data we will have that this rate is dependent on several covariants, so we need a way to determine this dependence on the covariants. It is here we use Poisson regression. Given $n$ independent subjects, we have that 
+\begin{itemize}
+\item $y_i$ is the count of the $i^{th}$ subject
+\item $x_{ij}$ is the $j^{th}$ covariant for the $i^{th}$ subject
+\end{itemize}
+We then define our model as 
+\begin{equation}
+\lambda_i = \lambda(x_{1,i},...,x_{p,i}) = \exp(\beta_0 + \beta_1 x_{1,i} + ... + \beta x_{p,i}).
+\end{equation}
+
+It is this model we want to fit to the medal counts. But there is something we have to be careful with: A country with a higher number of athletes will most likely have more medals than a country with fewer athletes. So instead of the medal count following the distribution $Y_i ~ Po(\lambda_i)$ we instead say that they follow the distribution $Y_i ~ Po(w_i\lambda_i)$, where $w_i$ is the number of athletes representing the country. But how do use this in our model? We can see this from taking the expected value
+
+\begin{equation}
+E[Y_i] = w_i \lambda_i = w_i\exp(\beta_0 + \beta_1 x_{1,i} + ... + \beta x_{p,i}) = \exp(\log(w_i) + \beta_0 + \beta_1 x_{1,i} + ... + \beta x_{p,i}).
+\end{equation}
+
+This means that to compensate for this imbalance of athletes, we can fit out model with $\log(w_i)$ as a covariant. This is what we call an offset. This we already $Log.athletes$ in our data, we can just use this as the offset in our regression.
+
+\subsection{b)}
+To find a fit for our model we are going to use two methods. The first is to fit a model with all the covariant and see which of them are significant. The other method is to add one covariant after an other and use a two-way ANOVA to see if the addition is significant.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrrr}
+  \hline
+ & Estimate & Std. Error & z value & Pr($>$|$z$|) \\ 
+  \hline
+(Intercept) & -2.8623 & 0.3191 & -8.97 & 0.0000 \\ 
+  Log.population & 0.0275 & 0.0315 & 0.87 & 0.3831 \\ 
+  GDP.per.cap & -0.0149 & 0.0032 & -4.65 & 0.0000 \\ 
+  Total1996 & 0.0118 & 0.0016 & 7.36 & 0.0000 \\ 
+   \hline
+\end{tabular}
+\caption{Summary of a Poisson regression with all the covariants. $Log.popilation$ is the logarithm of the nation's population size per 1000, $GDP.per.cap$ is the GDP per capita and $Total1996$ is the medal count for the previous Olympic Games.}\label{tab:ol_full_it}
+\end{table}
+
+
+From table\ref{tab:ol_full_it} we see the summary of the fit with all covariant. We see that with p-values close to $0$
+
+
+
+
+\section{Problem 3}
+
+
+
+
+
+
+
+\end{document}
+
