@@ -19,4 +19,23 @@ expcoef(crabs.fit.width)
 
 #c)
 
+crabs.fit.weight = glm(y~weight,data=crabs,family = binomial)
+crabs.fit.color = glm(y~factor(color),data=crabs,family = binomial)
+crabs.fit.spine = glm(y~factor(spine),data=crabs,family = binomial)
 
+summary(crabs.fit.weight)
+summary(crabs.fit.color)
+summary(crabs.fit.spine)
+
+#d)
+crabs.fit.all = glm(y~width + weight + factor(color) + factor(spine),data=crabs,family = binomial)
+summary(crabs.fit.all)
+
+crabs.fit.width.weight = glm(y~width + weight,data=crabs,family = binomial)
+summary(crabs.fit.width.weight)
+
+
+#e)
+
+crabs.fit.width.weight.interaction = glm(y~width + weight + width:weight,data=crabs,family = binomial)
+summary(crabs.fit.width.weight.interaction)
