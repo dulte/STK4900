@@ -1,4 +1,5 @@
 crabs = read.table("https://www.uio.no/studier/emner/matnat/math/STK4900/v19/mandatory/crabs.txt",header=TRUE)
+plot(crabs)
 
 #a)
 
@@ -28,7 +29,7 @@ summary(crabs.fit.color)
 summary(crabs.fit.spine)
 
 #d)
-crabs.fit.all = glm(y~width + weight + factor(color) + factor(spine),data=crabs,family = binomial)
+crabs.fit.all <- glm(y~width + weight + factor(color) + factor(spine),data=crabs,family = binomial)
 summary(crabs.fit.all)
 
 crabs.fit.width.weight = glm(y~width + weight,data=crabs,family = binomial)
@@ -38,4 +39,7 @@ summary(crabs.fit.width.weight)
 #e)
 
 crabs.fit.width.weight.interaction = glm(y~width + weight + width:weight,data=crabs,family = binomial)
+anova(crabs.fit.width.weight.interaction)
 summary(crabs.fit.width.weight.interaction)
+
+# There is confounding, but does not seem to be interaction

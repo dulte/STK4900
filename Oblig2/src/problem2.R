@@ -12,6 +12,7 @@ fit.pop.gdp = glm(Total2000~offset(Log.athletes)+Log.population + GDP.per.cap,da
 fit.pop.gdp.96 = glm(Total2000~offset(Log.athletes)+Log.population + GDP.per.cap + Total1996 ,data=olympic,family=poisson)
 
 fit.pop.96 = glm(Total2000~offset(Log.athletes)+GDP.per.cap + Total1996,data=olympic,family=poisson)
+fit.gdp.96 = glm(Total2000~offset(Log.athletes)+GDP.per.cap + Total1996,data=olympic,family=poisson)
 
 summary(fit.pop.96)
 
@@ -19,6 +20,7 @@ summary(fit.pop.96)
 summary(fit.pop)
 summary(fit.pop.gdp)
 summary(fit.pop.gdp.96)
+summary(fit.gdp.96)
 anova(fit.null,fit.pop,fit.pop.gdp,fit.pop.gdp.96,test="Chisq")
 
 
