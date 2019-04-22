@@ -35,6 +35,7 @@ summary(crabs.fit.all)
 crabs.fit.width.weight = glm(y~width + weight,data=crabs,family = binomial)
 summary(crabs.fit.width.weight)
 
+plot(width~weight,data=crabs, main="Width as a function of weight")
 
 #e)
 
