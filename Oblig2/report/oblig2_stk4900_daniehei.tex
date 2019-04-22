@@ -107,13 +107,100 @@ is close to normally distributed, we can use this to find a confidence interval 
 \caption{Confidence interval for the odds ratio for crabs differing by one cm in width.}\label{tab:crabs_OR_CI}
 \end{table}
 
-From tab. \ref{tab:crabs_OR_CI} we see that we get a confidence interval $CI = (1.35,2.01)$. Since $1$ is outside of this interval, we can say that width gives an significant increase in the probability of satellites. 
+From tab. \ref{tab:crabs_OR_CI} we see that we get a confidence interval $CI = \exp(\beta \pm 1.96\cdot se(\beta)) = (1.35,2.01)$. Since $1$ is outside of this interval, we can say that width gives an significant increase in the probability of satellites. 
 
 \subsection{c)}
+We now want to use width, weight, color and spine as covariates. The first two, width and weight, can have a continuous range of values, thus being numerical covariates. Color and spine discrete properties of the crab, and can only take on four and three values respectively. This means that these are categorical covariates. We then try to fit model with each of the covariates.
+
+\begin{table}[!htb]
+\centering
+\begin{tabular}{rrrrr}
+  \hline
+ & Estimate & Std. Error & z value & Pr($>$ $|$z$|$) \\ 
+  \hline
+  \multicolumn{5}{l}{\textbf{Model: Weight}}\\
+(Intercept) & -3.6947 & 0.8802 & -4.20 & 2.70e-05 \\ 
+  weight & 1.8151 & 0.3767 & 4.82 & 1.45e-06 \\ 
+   \hline
+   \multicolumn{5}{l}{\textbf{Model: Width}}\\
+   (Intercept) & -12.3508 & 2.6287 & -4.70 & 2.62e-06 \\ 
+  width & 0.4972 & 0.1017 & 4.89 & 1.02e-06 \\ 
+   \hline
+   \multicolumn{5}{l}{\textbf{Model: Color}}\\
+   (Intercept) & 1.0986 & 0.6667 & 1.65 & 0.0994 \\ 
+  factor(color)2 & -0.1226 & 0.7053 & -0.17 & 0.8620 \\ 
+  factor(color)3 & -0.7309 & 0.7338 & -1.00 & 0.3192 \\ 
+  factor(color)4 & -1.8608 & 0.8087 & -2.30 & 0.0214 \\ 
+   \hline
+   \multicolumn{5}{l}{\textbf{Model: Spine}}\\
+   (Intercept) & 0.8602 & 0.3597 & 2.39 & 0.0168 \\ 
+  factor(spine)2 & -0.9937 & 0.6303 & -1.58 & 0.1149 \\ 
+  factor(spine)3 & -0.2647 & 0.4068 & -0.65 & 0.5152 \\ 
+   \hline
+\end{tabular}
+\caption{Summary of the fitted model using each of the covariates.}
+\label{tab:crabs_each}
+\end{table}
+
+In table \ref{tab:crabs_each} we see one model for each of the covariates. We can see that width and weight have a significance on the presence of satellites with p-values far below $0.05$. 
+
+For spines there seems to be no difference in the condition of the females spine. 
+
+For color, the effects are mostly insignificant, except for color category $4$, which corresponds to a dark colouration. It there for seems that if the female crab is dark, contrary to light which is the default color, the odds ratio is $OR = exp(-1.86) = 0.156$, meaning that the odds of a dark female crab having satellites are only $15\%$ of that of a light female crab \todo{Check if this is interpreted correctly!}.
+
+So it seems that the most significant covariates are width and weight, and if the female crab is dark or light. \todo{Maybe write more on this?}
+
 
 \subsection{d)}
-\subsection{e)}
 
+We will now try to fit a model with all of covariates used above.
+
+\begin{table}[!htb]
+\centering
+\begin{tabular}{rrrrr}
+  \hline
+ & Estimate & Std. Error & z value & Pr($>$ $|$z$|$) \\ 
+  \hline
+(Intercept) & -8.0650 & 3.9286 & -2.05 & 0.0401 \\ 
+  width & 0.2631 & 0.1953 & 1.35 & 0.1779 \\ 
+  weight & 0.8258 & 0.7038 & 1.17 & 0.2407 \\ 
+  factor(color)2 & -0.1029 & 0.7826 & -0.13 & 0.8954 \\ 
+  factor(color)3 & -0.4889 & 0.8531 & -0.57 & 0.5666 \\ 
+  factor(color)4 & -1.6087 & 0.9355 & -1.72 & 0.0855 \\ 
+  factor(spine)2 & -0.0960 & 0.7034 & -0.14 & 0.8915 \\ 
+  factor(spine)3 & 0.4003 & 0.5027 & 0.80 & 0.4259 \\ 
+   \hline
+\end{tabular}
+\caption{Summary of the model fitted with width, weight, color and spine as covariates.}\label{tab:crabs_all}
+\end{table}
+
+The resulting model can be found in table \ref{tab:crabs_all}. We see that even though width, weight and one color were significant, none of the covariates are significant anymore. This means that we cant remove any of the covariates with the reason that they are insignificant here. Since we saw that width and weight were significant we can try to use only them -- we will ignore the one significant color now, to make the model easier. Table \ref{tab:crabs_width_weight} shows the resulting model. But again we see that none of the covariates are significant. 
+
+\begin{table}[!htb]
+\centering
+\begin{tabular}{rrrrr}
+  \hline
+ & Estimate & Std. Error & z value & Pr($>$ $|$z$|$) \\ 
+  \hline
+(Intercept) & -9.3547 & 3.5280 & -2.65 & 0.0080 \\ 
+  width & 0.3068 & 0.1819 & 1.69 & 0.0918 \\ 
+  weight & 0.8338 & 0.6716 & 1.24 & 0.2145 \\ 
+   \hline
+\end{tabular}
+\caption{Summary of the model fitted with width and weight as covariates.}\label{tab:crabs_width_weight}
+\end{table}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.5]{crabs_width_weight}
+\caption{The figure shows that we can describe the width of the crabs as a linear function of the weight of the crabs.}\label{fig:crabs_width_weight}
+\end{figure}
+
+To try to find out why we width and weight are insignificant we try to plot them against eachother. From fig. \ref{fig:crabs_width_weight} we see that we can describe the width of the female crabs as a linear function of the weight of the crabs. This means that we have one covariate, weight, that describes an other covariate, width, as well as the outcome. This means that we have confounding. This means that we can use only one of these covariates in our model. \todo{Check if all of this is correct, and if we can just use one of them. Also: In the slides confounding can be solved with interaction. Is this the case here?}
+
+
+\subsection{e)}
+\todo{Write about Interaction}
 
 \section{Problem 2}
 \subsection{a)}
@@ -136,7 +223,7 @@ E[Y_i] = w_i \lambda_i = w_i\exp(\beta_0 + \beta_1 x_{1,i} + ... + \beta x_{p,i}
 This means that to compensate for this imbalance of athletes, we can fit out model with $\log(w_i)$ as a covariate. This is what we call an offset. This we already $Log.athletes$ in our data, we can just use this as the offset in our regression.
 
 \subsection{b)}
-To find a fit for our model we are going to use two methods. The first is to fit a model with all the covariate and see which of them are significant. The other method is to add one covariate after an other and use a two-way ANOVA to see if the addition is significant.
+We will try to find the best model by first fitting a model with all the variables as covariates. 
 
 \begin{table}[!htb]
 \centering
@@ -144,20 +231,73 @@ To find a fit for our model we are going to use two methods. The first is to fit
   \hline
  & Estimate & Std. Error & z value & Pr($>$|$z$|) \\ 
   \hline
-(Intercept) & -2.8623 & 0.3191 & -8.97 & 0.0000 \\ 
+(Intercept) & -2.8623 & 0.3191 & -8.97 & < 2e-16 \\ 
   Log.population & 0.0275 & 0.0315 & 0.87 & 0.3831 \\ 
-  GDP.per.cap & -0.0149 & 0.0032 & -4.65 & 0.0000 \\ 
-  Total1996 & 0.0118 & 0.0016 & 7.36 & 0.0000 \\ 
+  GDP.per.cap & -0.0149 & 0.0032 & -4.65 & 3.29e-06 \\ 
+  Total1996 & 0.0118 & 0.0016 & 7.36 & 1.79e-13 \\ 
    \hline
 \end{tabular}
 \caption{Summary of a Poisson regression with all the covariates. $Log.popilation$ is the logarithm of the nation's population size per 1000, $GDP.per.cap$ is the GDP per capita and $Total1996$ is the medal count for the previous Olympic Games.}\label{tab:ol_full_it}
 \end{table}
 
 
-From table\ref{tab:ol_full_it} we see the summary of the fit with all covariate. We see that with p-values close to $0$
+From table\ref{tab:ol_full_it} we see the summary of the fit with all covariate. We see that both GDP per capita and number of medals in 1996 are both significant, with p-values of $p=3.29\cdot 10^{-6}$ and $p=1.79\cdot 10^{-13}$ respectively, while the logarithm of the population seems no to be significant with $p = 0.38$. If we now fit the model with only the significant covariates we get the model found in table \ref{tab:ol_96_gdp}. Thus we seem to have found the best model for the amount of models won in the 2000 Olympic games. 
+
+\begin{table}[!htb]
+\centering
+\begin{tabular}{rrrrr}
+  \hline
+ & Estimate & Std. Error & z value & Pr($>$|$z$|) \\ 
+  \hline
+(Intercept) & -2.5893 & 0.0576 & -44.92 & < 2e-16 \\ 
+  GDP.per.cap & -0.0158 & 0.0031 & -5.16 & 2.41e-07 \\ 
+  Total1996 & 0.0128 & 0.0011 & 11.25 & < 2e-16 \\ 
+   \hline
+\end{tabular}
+\caption{Summary of our first attempt of the best model, with GDP per capita and medals won in the 1996 Olympic games as covariates.}\label{tab:ol_96_gdp}
+\end{table}
+
+But if we instead try to build this model from the ground up we see something interesting with just athletes and GDP per capita as covariates, we see something else. From tab. \ref{tab:ol_pop_gdp} we see that without the number of medals from 1996, we see that, contrary to tab. \ref{tab:ol_full_it}, the population is significant, while GDP per capita is not. So something is happening here...
+
+\begin{table}[!htb]
+\centering
+\begin{tabular}{rrrrr}
+  \hline
+ & Estimate & Std. Error & z value & Pr($>$ $|$z$|$) \\ 
+  \hline
+(Intercept) & -4.2551 & 0.2508 & -16.97 & < 2e-16 \\ 
+  Log.population & 0.1796 & 0.0225 & 7.99 & 1.3e-15 \\ 
+  GDP.per.cap & -0.0043 & 0.0027 & -1.59 & 0.111 \\ 
+   \hline
+\end{tabular}
+\caption{Model using logarithm of the population of the nation and GDP per capita as covariates.}\label{tab:ol_pop_gdp}
+\end{table}
+
+I think that this model is more correct than that of tab. \ref{tab:ol_96_gdp}. This is because the medal count of 1996, have more or less the same dependence of population and GDP per capita as the medal count from 2000. \todo{Maybe show this dependency?} The medal count of 2000 is also very correlated with that of 1996 \todo{Show this?}, which is expected, since a nation has many of the same athletes and causing factors as they had 4 years ago. This means that if we use $Total1996$ as a covariates for the medal count in 2000, the dependency on $Log.population$ is hidden inside $Total1996$, thus making $Log.population$ seem insignificant. Why it enhances GDP per capita, I don't know. So why shouldn't we just $Total1996$? This is like forecasting the weather tomorrow by saying it is the same as today: You will most likely be right, but it doesn't explain anything. So if we ignore $Total1996$, and using tab. \ref{tab:ol_pop_gdp} we find our final model by noting that GDP per capita is insignificant, and end up tab. \ref{tab:ol_pop} as our final model.
 
 
+\begin{table}[!htb]
+\centering
+\begin{tabular}{rrrrr}
+  \hline
+ & Estimate & Std. Error & z value & Pr($>$ $|$z$|$) \\ 
+  \hline
+(Intercept) & -4.3462 & 0.2459 & -17.68 & < 2e-16 \\ 
+  Log.population & 0.1821 & 0.0226 & 8.07 & 6.84e-16 \\ 
+   \hline
+\end{tabular}
+\caption{The final model with the logarithm of the nation's population as the only covariate.}\label{tab:ol_pop}
+\end{table}
 
+This model tells us that given a rise in one $Log.population$ -- which is the logarithm of population size per $1000$ -- we get a \textit{rate ratio}
+
+\begin{equation}
+RR = \exp(\beta) = \exp(0.18212) = 1.199758,
+\end{equation}
+
+meaning that the rate of medals won increases by $20\%$.
+
+This model partly confirm the initial statement from the exercise: Large nations will win more medals, but their wealth is insignificant for the medal count.
 
 \section{Problem 3}
 
