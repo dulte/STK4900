@@ -33,6 +33,8 @@ crabs.fit.all <- glm(y~ weight + width + factor(spine) + factor(color) ,data=cra
 summary(crabs.fit.all)
 anova(crabs.fit.all,test="Chisq")
 
+
+#To look at dependence between weight and width
 crabs.fit.width.weight = glm(y~width + weight,data=crabs,family = binomial)
 summary(crabs.fit.width.weight)
 
@@ -40,7 +42,7 @@ plot(width~weight,data=crabs, main="Width as a function of weight")
 
 #e)
 
-
+#Checks interaction
 crabs.fit.all.interaction = glm(y~weight + width + width:weight + factor(spine) + factor(color) + width:factor(color) + width:factor(spine) + weight:factor(color) + weight:factor(spine) + factor(spine):factor(color),data=crabs,family = binomial)
 anova(crabs.fit.all.interaction,test="Chisq")
 
