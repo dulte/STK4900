@@ -111,7 +111,7 @@ is close to normally distributed, we can use this to find a confidence interval 
 From tab. \ref{tab:crabs_OR_CI} we see that we get a confidence interval $CI = \exp(\beta \pm 1.96\cdot se(\beta)) = (1.35,2.01)$. Since $1$ is outside of this interval, we can say that width gives an significant increase in the probability of satellites. 
 
 \subsection{c)}
-We now want to use width, weight, color and spine as covariates. The first two, width and weight, can have a continuous range of values, thus being numerical covariates. Color and spine discrete properties of the crab, and can only take on four and three values respectively. This means that these are categorical covariates. We then try to fit model with each of the covariates.
+We now want to use width, weight, color and spine as covariates. The first two, width and weight, can have a continuous range of values, thus being numerical covariates. Color and spine are discrete properties of the crab, and can only take on four and three values respectively. This means that these are categorical covariates. We then try to fit model with each of the covariates.
 
 \begin{table}[!htb]
 \centering
@@ -147,7 +147,7 @@ In table \ref{tab:crabs_each} we see one model for each of the covariates. We ca
 
 For spines there seems to be no difference in the condition of the females spine. 
 
-For color, the effects are mostly insignificant, except for color category $4$, which corresponds to a dark coloration. It there for seems that if the female crab is dark, contrary to light which is the default color, the odds ratio is $OR = \exp(-1.86) = 0.156$, meaning that the odds of a dark female crab having satellites are only $15\%$ of that of a light female crab 
+For color, the effects are mostly insignificant, except for color category $4$, which corresponds to a dark colouration. It there for seems that if the female crab is dark, contrary to light which is the default color, the odds ratio is $OR = \exp(-1.86) = 0.156$, meaning that the odds of a dark female crab having satellites are only $15\%$ of that of a light female crab 
 
 So it seems that the most significant covariates are width and weight, and if the female crab is dark or light.
 
@@ -175,7 +175,7 @@ We will now try to fit a model with all of covariates used above.
 \caption{Summary of the model fitted with width, weight, color and spine as covariates.}\label{tab:crabs_all}
 \end{table}
 
-The resulting model can be found in table \ref{tab:crabs_all}. We see that even though width, weight and one color were significant, none of the covariates are significant anymore. This means that we cant remove any of the covariates with the reason that they are insignificant here. Instead of just looking at the summary of the fitted model to find the significant covariates, we can do an ANOVA on the full model. With the ANOVA we can find out if we can reject the null hypothesis that the coefficient for a given covariate is zero ($H_0: \beta_i = 0$). In other words if a covariate is a main effect. From table \ref{tab:crabs_anova} we see that weight, with a p-value of $p= 4.3\cdot 10^{-8}$, is the only covariates that seems to be a main effect of the model. We also see that color, with a p-value of $p= 0.055$, is close to being significant, but is right above our cut off.
+The resulting model can be found in table \ref{tab:crabs_all}. We see that even though width, weight and one color were significant, none of the covariates are significant anymore. This means that we cant remove any of the covariates with the reason that they are insignificant here. Instead of just looking at the summary of the fitted model to find the significant covariates, we can do an ANOVA on the full model. With the ANOVA we can find out if we can reject the null hypothesis that the coefficient for a given covariate is zero ($H_0: \beta_i = 0$). In other words, we can check if a covariate is a main effect. From table \ref{tab:crabs_anova} we see that weight, with a p-value of $p= 4.3\cdot 10^{-8}$, is the only covariates that seems to be a main effect of the model. We also see that color, with a p-value of $p= 0.055$, is close to being significant, but is right above our cut off.
 
 
 \begin{table}[!htb]
@@ -219,7 +219,7 @@ But we saw that on their own both weight and width were good predictors of y, bu
 \caption{The figure shows that we can describe the width of the crabs as a linear function of the weight of the crabs.}\label{fig:crabs_width_weight}
 \end{figure}
 
-To try to find out why width and weight are insignificant we try to plot them against eachother. From fig. \ref{fig:crabs_width_weight} we observe that we can describe the width of the female crabs as a linear function of the weight of the crabs. This means that we have one covariate, weight, that describes an other covariate, width, as well as the outcome. This means that we have confounding. This describes why only weight was significant in tab. \ref{tab:crabs_anova}, since width was described by weight and did not bring anything new to the model. In fact: If we change the order of the covariates in the model, so that width is before weight, the result would be reversed, with width being significant and weight not. This means that we only need one of these covariates in our model. \todo{Read over since this was rewritten twice and may not make sense...}
+To try to find out why width and weight are insignificant we try to plot them against eachother. From fig. \ref{fig:crabs_width_weight} we observe that we can describe the width of the female crabs as a linear function of the weight of the crabs. This means that we have one covariate, weight, that describes an other covariate, width, as well as the outcome. This means that we have confounding. This describes why only weight was significant in tab. \ref{tab:crabs_anova}, since width was described by weight and did not bring anything new to the model. In fact: If we change the order of the covariates in the model, so that width is before weight, the result would be reversed, with width being significant and weight not. This means that we only need one of these covariates in our model. So the chance of a female crab having satellites is best described with one covariate: Either width or weight. \todo{Read over since this was rewritten twice and may not make sense...}
 
 \subsection{e)}
 We now want to check if there is interaction between the covariates. We will do this by fitting a full model with pairwise interaction terms. In table \ref{tab:crabs_interaction} we see that none of the interaction terms have coefficients significantly different from zero. The only covariate we can say is has an effect is, again, weight. We see that once more color, as well as the interaction term between color and weight, is close to significant, but again above our cut off. So there is no interaction in our data. 	
@@ -417,7 +417,7 @@ Ascites & \multicolumn{5}{l}{Chisq= 50.6  on 2 degrees of freedom, p= 1e-11}\\
 
 Table \ref{tab:logrank} shows us the logrank tests for the different covariates with their respective groups. Looking at the difference between placebo and prednisone we see that we have a small $\chi^2 = 0.7$ and large $p=0.4$. This means that we cannot conclude that prednisone increase survival -- as we saw in fig. \ref{fig:KM_treat}.
 
-In the difference between male and female patients, we see in fig. \ref{fig:KM_sex} there female patients seemed to have a bit longer than male patients. But from tab. \ref{tab:logrank} we see that we get a statistic $\chi^2 = 3.5$ and $p=0.006$. This means the $p$ is a bit too large for us to say that it is significant. Thus we cannot conclude that there is a difference between the sexes.
+In the difference between male and female patients, we see in fig. \ref{fig:KM_sex} there female patients seemed to have a bit longer than male patients. But from tab. \ref{tab:logrank} we see that we get a statistic $\chi^2 = 3.5$ and $p=0.06$. This means the $p$ is a bit too large for us to say that it is significant. Thus we cannot conclude that there is a difference between the sexes.
 
 Fro both ascites and age group we saw in fig. \ref{fig:KM_asc} and \ref{fig:KM_age} that there seems to be a large difference in the survival between the groups. From tab. \ref{tab:logrank} we see for the difference severities of ascites we get $\chi^2 = 69.9$ and $p=7\cdot10^{-16}$, and for different age groups we get $\chi^2 = 50.6$ and $p=1\cdot10^{-11}$. So we conclude that there is a significant difference between the different severities in ascites, and there is a significant difference between the age groups.
 
@@ -448,7 +448,7 @@ factor(sex)1 & 0.46 & 1.59 & 0.13 & 3.68 & 0.000236 \\
 \caption{Table showing a part of the summary of the Cox regression, with the exponent of the coefficients included.}\label{tab:cox}
 \end{table}
 
-Table \ref{tab:cox} shows the result of the Cox regression. We that once again the severity of ascites and age have significant effects on the hazard, with both increase in severity and age leading to an increase in hazard. Contrary to our logrank test, where sex did not have a significant effect on survival, we see that sex have a significant effect on the hazard, with male patients having a larger hazard.\todo{Quantify the increases and decreases}
+Table \ref{tab:cox} shows the result of the Cox regression. We see that once again the severity of ascites and age have significant effects on the hazard, with both increase in severity and age leading to an increase in hazard. Contrary to our logrank test, where sex did not have a significant effect on survival, we see that sex have a significant effect on the hazard, with male patients having a larger hazard.\todo{Quantify the increases and decreases}
 
 We can find the hazard ratio for men versus women by observing that
 
