@@ -1,5 +1,4 @@
 crabs = read.table("https://www.uio.no/studier/emner/matnat/math/STK4900/v19/mandatory/crabs.txt",header=TRUE)
-plot(crabs)
 
 #a)
 

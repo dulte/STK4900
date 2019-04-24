@@ -31,6 +31,7 @@
 \lstset{language=c++}
 \lstset{alsolanguage=[90]Fortran}
 \lstset{alsolanguage=Python}
+\lstset{alsolanguage=R}
 \lstset{basicstyle=\small}
 \lstset{backgroundcolor=\color{white}}
 \lstset{frame=single}
@@ -174,7 +175,29 @@ We will now try to fit a model with all of covariates used above.
 \caption{Summary of the model fitted with width, weight, color and spine as covariates.}\label{tab:crabs_all}
 \end{table}
 
-The resulting model can be found in table \ref{tab:crabs_all}. We see that even though width, weight and one color were significant, none of the covariates are significant anymore. This means that we cant remove any of the covariates with the reason that they are insignificant here. Since we saw that width and weight were significant we can try to use only them -- we will ignore the one significant color now, to make the model easier. Table \ref{tab:crabs_width_weight} shows the resulting model. But again we see that none of the covariates are significant. 
+The resulting model can be found in table \ref{tab:crabs_all}. We see that even though width, weight and one color were significant, none of the covariates are significant anymore. This means that we cant remove any of the covariates with the reason that they are insignificant here. Instead of just looking at the summary of the fitted model to find the significant covariates, we can do an ANOVA on the full model. With the ANOVA we can find out if we can reject the null hypothesis that the coefficient for a given covariate is zero ($H_0: \beta_i = 0$). In other words if a covariate is a main effect. From table \ref{tab:crabs_anova} we see that weight, with a p-value of $p= 4.3\cdot 10^{-8}$, is the only covariates that seems to be a main effect of the model. We also see that color, with a p-value of $p= 0.055$, is close to being significant, but is right above our cut off.
+
+
+\begin{table}[!htb]
+\centering
+\begin{tabular}{lrrrrr}
+  \hline
+ & Df & Deviance & Resid. Df & Resid. Dev & Pr($>$Chi) \\ 
+  \hline
+NULL &  &  & 172 & 225.76 &  \\ 
+  weight & 1 & 30.02 & 171 & 195.74 & 4.273e-08 \\ 
+  width & 1 & 2.85 & 170 & 192.89 & 0.0916 \\ 
+  factor(spine) & 2 & 0.09 & 168 & 192.80 & 0.9540 \\ 
+  factor(color) & 3 & 7.60 & 165 & 185.20 & 0.0551 \\ 
+   \hline
+\end{tabular}
+\caption{Summary of an ANOVA with a full model describing satellite males.}\label{tab:crabs_anova}
+\end{table}
+
+
+
+
+But we saw that on their own both weight and width were good predictors of y, but in tab. \ref{tab:crabs_anova} only one of them were significant. We can try to make a model with only these two covariates. Table \ref{tab:crabs_width_weight} shows the resulting model. But again we see that none of the covariates are significant. 
 
 \begin{table}[!htb]
 \centering
@@ -196,11 +219,34 @@ The resulting model can be found in table \ref{tab:crabs_all}. We see that even 
 \caption{The figure shows that we can describe the width of the crabs as a linear function of the weight of the crabs.}\label{fig:crabs_width_weight}
 \end{figure}
 
-To try to find out why width and weight are insignificant we try to plot them against eachother. From fig. \ref{fig:crabs_width_weight} we observe that we can describe the width of the female crabs as a linear function of the weight of the crabs. This means that we have one covariate, weight, that describes an other covariate, width, as well as the outcome. This means that we have confounding. Meaning that we only need one of these covariates in our model. \todo{Check if all of this is correct, and if we can just use one of them. Also: In the slides confounding can be solved with interaction. Is this the case here?}
+To try to find out why width and weight are insignificant we try to plot them against eachother. From fig. \ref{fig:crabs_width_weight} we observe that we can describe the width of the female crabs as a linear function of the weight of the crabs. This means that we have one covariate, weight, that describes an other covariate, width, as well as the outcome. This means that we have confounding. This describes why only weight was significant in tab. \ref{tab:crabs_anova}, since width was described by weight and did not bring anything new to the model. In fact: If we change the order of the covariates in the model, so that width is before weight, the result would be reversed, with width being significant and weight not. This means that we only need one of these covariates in our model. \todo{Read over since this was rewritten twice and may not make sense...}
 
-\newpage
 \subsection{e)}
-\todo{Write about Interaction! Width and weight are dependent, so can they have interaction?}
+We now want to check if there is interaction between the covariates. We will do this by fitting a full model with pairwise interaction terms. In table \ref{tab:crabs_interaction} we see that none of the interaction terms have coefficients significantly different from zero. The only covariate we can say is has an effect is, again, weight. We see that once more color, as well as the interaction term between color and weight, is close to significant, but again above our cut off. So there is no interaction in our data. 	
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{lrrrrr}
+  \hline
+ & Df & Deviance & Resid. Df & Resid. Dev & Pr($>$Chi) \\ 
+  \hline
+NULL &  &  & 172 & 225.76 &  \\ 
+  weight & 1 & 30.02 & 171 & 195.74 & 4.273e-08 \\ 
+  width & 1 & 2.85 & 170 & 192.89 & 0.0916 \\ 
+  factor(spine) & 2 & 0.09 & 168 & 192.80 & 0.9540 \\ 
+  factor(color) & 3 & 7.60 & 165 & 185.20 & 0.0551 \\ 
+  weight:width & 1 & 0.82 & 164 & 184.39 & 0.3664 \\ 
+  width:factor(color) & 3 & 6.58 & 161 & 177.80 & 0.0865 \\ 
+  width:factor(spine) & 2 & 0.51 & 159 & 177.29 & 0.7738 \\ 
+  weight:factor(color) & 3 & 3.95 & 156 & 173.34 & 0.2668 \\ 
+  weight:factor(spine) & 2 & 5.83 & 154 & 167.51 & 0.0542 \\ 
+  factor(spine):factor(color) & 6 & 8.26 & 148 & 159.25 & 0.2199 \\ 
+   \hline
+\end{tabular}
+\caption{Summary of a full model with pairwise interaction terms between each of the covariates.}\label{tab:crabs_interaction}
+\end{table}
+
+
 
 \section{Problem 2}
 \subsection{a)}
@@ -423,6 +469,21 @@ From \ref{tab:logrank} and \ref{tab:cox} we can conclude that while ascites and 
 
 
 
+\newpage
+\section*{Appendix}
+\subsection*{R Code for Problem 1}
+
+\lstinputlisting{../src/problem1.R}
+
+\newpage
+
+\subsection*{R Code for Problem 2}
+
+\lstinputlisting{../src/problem2.R}
+
+\subsection*{R Code for Problem 3}
+
+\lstinputlisting{../src/problem3.R}
 
 
 

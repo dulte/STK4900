@@ -6,15 +6,13 @@ plot(olympic)
 
 
 #b)
-fit.null = glm(Total2000~offset(Log.athletes),data=olympic,family=poisson)
+# Full model
 fit.pop.gdp.96 = glm(Total2000~offset(Log.athletes)+Log.population + GDP.per.cap + Total1996 ,data=olympic,family=poisson)
-fit.gdp.96 = glm(Total2000~offset(Log.athletes)+GDP.per.cap + Total1996,data=olympic,family=poisson)
-
 summary(fit.pop.gdp.96)
-summary(fit.gdp.96)
 
 
 
+# Models with pop and gdp
 fit.pop = glm(Total2000~offset(Log.athletes)+Log.population,data=olympic,family=poisson)
 fit.pop.gdp = glm(Total2000~offset(Log.athletes)+Log.population + GDP.per.cap,data=olympic,family=poisson)
 
