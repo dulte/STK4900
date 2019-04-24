@@ -29,8 +29,9 @@ summary(crabs.fit.color)
 summary(crabs.fit.spine)
 
 #d)
-crabs.fit.all <- glm(y~width + weight + factor(color) + factor(spine),data=crabs,family = binomial)
+crabs.fit.all <- glm(y~ weight + width + factor(spine) + factor(color) ,data=crabs,family = binomial)
 summary(crabs.fit.all)
+anova(crabs.fit.all,test="Chisq")
 
 crabs.fit.width.weight = glm(y~width + weight,data=crabs,family = binomial)
 summary(crabs.fit.width.weight)
@@ -39,8 +40,8 @@ plot(width~weight,data=crabs, main="Width as a function of weight")
 
 #e)
 
-crabs.fit.width.weight.interaction = glm(y~width + weight + width:weight,data=crabs,family = binomial)
-anova(crabs.fit.width.weight.interaction)
-summary(crabs.fit.width.weight.interaction)
 
-# There is confounding, but does not seem to be interaction
+crabs.fit.all.interaction = glm(y~weight + width + width:weight + factor(spine) + factor(color) + width:factor(color) + width:factor(spine) + weight:factor(color) + weight:factor(spine) + factor(spine):factor(color),data=crabs,family = binomial)
+anova(crabs.fit.all.interaction,test="Chisq")
+
+

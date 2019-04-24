@@ -90,7 +90,7 @@ If $p(1) = p(x+1)$ and $p(0)=p(x)$ are small, we can approximate the odds ratio 
 
 Since we know that 
 \begin{equation}
-t = \frac{\beta}{se(\beta)}
+z = \frac{\beta}{se(\beta)}
 \end{equation}
 is close to normally distributed, we can use this to find a confidence interval for the odds ratio. We simply do this by calculating the confidence interval for $\beta_1$ and then taking $\exp$ of this interval. 
 
@@ -146,9 +146,9 @@ In table \ref{tab:crabs_each} we see one model for each of the covariates. We ca
 
 For spines there seems to be no difference in the condition of the females spine. 
 
-For color, the effects are mostly insignificant, except for color category $4$, which corresponds to a dark colouration. It there for seems that if the female crab is dark, contrary to light which is the default color, the odds ratio is $OR = exp(-1.86) = 0.156$, meaning that the odds of a dark female crab having satellites are only $15\%$ of that of a light female crab \todo{Check if this is interpreted correctly!}.
+For color, the effects are mostly insignificant, except for color category $4$, which corresponds to a dark coloration. It there for seems that if the female crab is dark, contrary to light which is the default color, the odds ratio is $OR = \exp(-1.86) = 0.156$, meaning that the odds of a dark female crab having satellites are only $15\%$ of that of a light female crab 
 
-So it seems that the most significant covariates are width and weight, and if the female crab is dark or light. \todo{Maybe write more on this?}
+So it seems that the most significant covariates are width and weight, and if the female crab is dark or light.
 
 
 \subsection{d)}
@@ -190,31 +190,31 @@ The resulting model can be found in table \ref{tab:crabs_all}. We see that even 
 \caption{Summary of the model fitted with width and weight as covariates.}\label{tab:crabs_width_weight}
 \end{table}
 
-\begin{figure}
+\begin{figure}[!htb]
 \centering
 \includegraphics[scale=0.5]{crabs_width_weight}
 \caption{The figure shows that we can describe the width of the crabs as a linear function of the weight of the crabs.}\label{fig:crabs_width_weight}
 \end{figure}
 
-To try to find out why we width and weight are insignificant we try to plot them against eachother. From fig. \ref{fig:crabs_width_weight} we see that we can describe the width of the female crabs as a linear function of the weight of the crabs. This means that we have one covariate, weight, that describes an other covariate, width, as well as the outcome. This means that we have confounding. This means that we can use only one of these covariates in our model. \todo{Check if all of this is correct, and if we can just use one of them. Also: In the slides confounding can be solved with interaction. Is this the case here?}
+To try to find out why width and weight are insignificant we try to plot them against eachother. From fig. \ref{fig:crabs_width_weight} we observe that we can describe the width of the female crabs as a linear function of the weight of the crabs. This means that we have one covariate, weight, that describes an other covariate, width, as well as the outcome. This means that we have confounding. Meaning that we only need one of these covariates in our model. \todo{Check if all of this is correct, and if we can just use one of them. Also: In the slides confounding can be solved with interaction. Is this the case here?}
 
-
+\newpage
 \subsection{e)}
-\todo{Write about Interaction}
+\todo{Write about Interaction! Width and weight are dependent, so can they have interaction?}
 
 \section{Problem 2}
 \subsection{a)}
-We have an outcome, medals, which is a count outcome, and we therefore assume that the count is distributed with a Poisson distribution $Y_i \sim Po(\lambda_i)$. Such a distribution is parametrized with a parameter $\lambda$, the rate. In our data we will have that this rate is dependent on several covariates, so we need a way to determine this dependence on the covariates. It is here we use Poisson regression. Given $n$ independent subjects, we have that 
+We have an outcome, medals, which is a count outcome, and we therefore assume that the count is distributed with a Poisson distribution $Y_i \sim Po(\lambda_i)$. Such a distribution is parametrized with a parameter $\lambda$, the rate. In our data we will have that this rate is dependent on several covariates, so we need a way to determine this dependence on the covariates. It is here we use Poisson regression. Given $n$ independent nations, we have that 
 \begin{itemize}
-\item $y_i$ is the count of the $i^{th}$ subject
-\item $x_{ij}$ is the $j^{th}$ covariate for the $i^{th}$ subject
+\item $y_i$ is the count of the $i^{th}$ nation
+\item $x_{ij}$ is the $j^{th}$ covariate for the $i^{th}$ nation
 \end{itemize}
 We then define our model as 
 \begin{equation}
 \lambda_i = \lambda(x_{1,i},...,x_{p,i}) = \exp(\beta_0 + \beta_1 x_{1,i} + ... + \beta x_{p,i}).
 \end{equation}
 
-It is this model we want to fit to the medal counts. But there is something we have to be careful with: A country with a higher number of athletes will most likely have more medals than a country with fewer athletes. So instead of the medal count following the distribution $Y_i ~ Po(\lambda_i)$ we instead say that they follow the distribution $Y_i ~ Po(w_i\lambda_i)$, where $w_i$ is the number of athletes representing the country. But how do use this in our model? We can see this from taking the expected value
+It is this model we want to fit to the medal counts. But there is something we have to be careful with: A country with a higher number of athletes will most likely have more medals than a country with fewer athletes. So instead of the medal count following the distribution $Y_i \sim Po(\lambda_i)$ we instead say that they follow the distribution $Y_i \sim Po(w_i\lambda_i)$, where $w_i$ is the number of athletes representing the country. But how do use this in our model? We can see this from taking the expected value
 
 \begin{equation}
 E[Y_i] = w_i \lambda_i = w_i\exp(\beta_0 + \beta_1 x_{1,i} + ... + \beta x_{p,i}) = \exp(\log(w_i) + \beta_0 + \beta_1 x_{1,i} + ... + \beta x_{p,i}).
@@ -241,7 +241,7 @@ We will try to find the best model by first fitting a model with all the variabl
 \end{table}
 
 
-From table\ref{tab:ol_full_it} we see the summary of the fit with all covariate. We see that both GDP per capita and number of medals in 1996 are both significant, with p-values of $p=3.29\cdot 10^{-6}$ and $p=1.79\cdot 10^{-13}$ respectively, while the logarithm of the population seems no to be significant with $p = 0.38$. If we now fit the model with only the significant covariates we get the model found in table \ref{tab:ol_96_gdp}. Thus we seem to have found the best model for the amount of models won in the 2000 Olympic games. 
+From table\ref{tab:ol_full_it} we see the summary of the fit with all covariate. We see that both GDP per capita and number of medals in 1996 are both significant, with p-values of $p=3.29\cdot 10^{-6}$ and $p=1.79\cdot 10^{-13}$ respectively, while the logarithm of the population seems not to be significant with $p = 0.38$. If we now fit the model with only the significant covariates we get the model found in table \ref{tab:ol_96_gdp}. Thus we seem to have found the best model for the amount of models won in the 2000 Olympic games. 
 
 \begin{table}[!htb]
 \centering
@@ -257,7 +257,7 @@ From table\ref{tab:ol_full_it} we see the summary of the fit with all covariate.
 \caption{Summary of our first attempt of the best model, with GDP per capita and medals won in the 1996 Olympic games as covariates.}\label{tab:ol_96_gdp}
 \end{table}
 
-But if we instead try to build this model from the ground up we see something interesting with just athletes and GDP per capita as covariates, we see something else. From tab. \ref{tab:ol_pop_gdp} we see that without the number of medals from 1996, we see that, contrary to tab. \ref{tab:ol_full_it}, the population is significant, while GDP per capita is not. So something is happening here...
+But if we instead try to build this model from the ground up we see something interesting with just athletes and GDP per capita as covariates, we see something else\todo{Skriv om!}. From tab. \ref{tab:ol_pop_gdp} we see that without the number of medals from 1996, we see that, contrary to tab. \ref{tab:ol_full_it}, the population is significant, while GDP per capita is not. So something is happening here...
 
 \begin{table}[!htb]
 \centering
@@ -402,7 +402,7 @@ factor(sex)1 & 0.46 & 1.59 & 0.13 & 3.68 & 0.000236 \\
 \caption{Table showing a part of the summary of the Cox regression, with the exponent of the coefficients included.}\label{tab:cox}
 \end{table}
 
-Table \ref{tab:cox} shows the result of the Cox regression. We that once again the severity of ascites and age have significant effects on the hazard, with both increase in severity and age leading to an increase in hazard. Contrary to our logrank test, where sex did not have a significant effect on survival, we see that sex have a significant effect on the hazard, with male patients having a larger hazard.
+Table \ref{tab:cox} shows the result of the Cox regression. We that once again the severity of ascites and age have significant effects on the hazard, with both increase in severity and age leading to an increase in hazard. Contrary to our logrank test, where sex did not have a significant effect on survival, we see that sex have a significant effect on the hazard, with male patients having a larger hazard.\todo{Quantify the increases and decreases}
 
 We can find the hazard ratio for men versus women by observing that
 
@@ -411,9 +411,9 @@ We can find the hazard ratio for men versus women by observing that
 \end{equation}
 This means that the hazard increases with $59\%$ if the patient is male. Since
 \begin{equation}
-t = \frac{\beta_i}{se(\beta_i)}
+z = \frac{\beta_i}{se(\beta_i)}
 \end{equation}
-is close to normally distributed \todo{is it?}, we can find the $95\%$ confidence interval for this hazard ratio as $\exp(\beta_i) \pm \exp(1.96\cdot se(\beta_i))$, which gives us the interval
+is close to normally distributed, we can find the $95\%$ confidence interval for this hazard ratio as $\exp(\beta_i) \pm \exp(1.96\cdot se(\beta_i))$, which gives us the interval
 \begin{equation}
 CI = (1.241,2.03).
 \end{equation}
