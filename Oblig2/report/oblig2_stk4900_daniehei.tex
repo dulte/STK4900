@@ -49,7 +49,7 @@
 
 \section{Problem 1}
 \subsection{a)}
-We have a data set where the outcome is whether the female crab has one or more satellites $y = 1$, or none $y=0$. We are looking for a regression that can, given the covariates, give us a probability that the female crab have satellites. This means that we are looking for a regression model that gives us a probability for a binary outcome. The best choice for such a model is a logistic regression model
+We have a data set where the outcome is whether the female crab has one or more satellites $y = 1$, or none $y=0$. We are looking for a regression that can, given the covariates, give us a probability that the female crab has satellites. This means that we are looking for a regression model that gives us a probability for a binary outcome. The best choice for such a model is a logistic regression model
 \begin{equation}
 p(x_1,...,x_p) = \frac{\exp(\beta_0 + \beta_1 x_1 + ... + \beta_n x_n)}{1+\exp(\beta_0 + \beta_1 x_1 + ... + \beta_n x_n)},
 \end{equation}
@@ -362,11 +362,11 @@ We are here looking at the survival of patients with cirrhosis treated with pred
 \label{fig:KM}
 \end{figure*}
 
-If we look at figure \ref{fig:KM} we see the different Kaplan-Meier plots for the different groups. Fig. \ref{fig:KM_treat} shows the difference in survival based on the treatment. We see that, (especially in the middle of the observation) patients with placebo the survival seems to be lower than for the patients with prednisone. This may indicate that the treatment helps, but we see that the difference is so small that the difference may be due to other factors.
+If we look at figure \ref{fig:KM} we see the different Kaplan-Meier plots for the different groups. Fig. \ref{fig:KM_treat} shows the difference in survival based on the treatment. We see that for patients with placebo the survival seems to be lower than for the patients with prednisone (especially in the middle of the observation). This may indicate that the treatment helps, but we see that the difference is so small that the difference may be due to other factors.
 
-Looking at fig. \ref{fig:KM_sex} we can clearly see that male patients has a lower survival for the entire observational period than female period. But again the difference is so small that we ought to be sceptical about the significance.
+Looking at fig. \ref{fig:KM_sex} we can clearly see that male patients has a lower survival for the entire observational period than female patients, i.e. women tend to survive longer. But again the difference is so small that we ought to be sceptical about the significance.
 
-For the ascites, fig. \ref{fig:KM_asc}, the difference in the severity of the fluid buildup seems to have a large impact on the survival of the patients. There is a clear decrease in survival for a patient with slight ascites compared with one with none, and an even wore decrease if the patient has marked ascites.
+For the ascites, fig. \ref{fig:KM_asc}, the difference in the severity of the fluid buildup seems to have a large impact on the survival of the patients. There is a clear decrease in survival for a patient with slight ascites compared with one with none, and an even worse decrease if the patient has marked ascites.
 
 The same clear difference can be seen in the estimated survival of the groups with different ages, fig. \ref{fig:KM_age}. The older a patient is, the shorter they tend to survive.
 
@@ -376,7 +376,7 @@ The same clear difference can be seen in the estimated survival of the groups wi
 We have seen above that there is some difference in all the $K$ different groups. Now we want to check if these differences are significant. To check this we are going to use \textit{logrank tests}. In this test we test the null hypothesis that a set with groups have the same survival function. We do this by finding the observed number of events in each group, giving us $O_i$. Then we find the expected number of events $E_i$, which is the number of observations we would expect if all the groups were the same. With these we can compute the $\chi^2$ test statistic
 
 \begin{equation}
-\chi^2_i = \frac{(O_i - E_i)^2}{se(O_i-E_i)}.
+\chi^2_i = \frac{(O_i - E_i)^2}{se(O_i-E_i)^2}.
 \end{equation}
 This follows a $\chi^2$ distribution with $K-1$ degrees of freedom.
 
@@ -416,13 +416,13 @@ Age Group & \multicolumn{5}{l}{Chisq= 50.6  on 2 degrees of freedom, p= 1e-11}\\
 
 Table \ref{tab:logrank} shows us the logrank tests for the different covariates with their respective groups. Looking at the difference between placebo and prednisone we see that we have a small $\chi^2 = 0.7$ and large $p=0.4$. This means that we cannot conclude that prednisone increase survival -- as we saw in fig. \ref{fig:KM_treat}.
 
-In the difference between male and female patients, we see in fig. \ref{fig:KM_sex} there female patients seemed to have a bit longer than male patients. But from tab. \ref{tab:logrank} we see that we get a statistic $\chi^2 = 3.5$ and $p=0.06$. This means the $p$ is a bit too large for us to say that it is significant. Thus we cannot conclude that there is a difference between the sexes.
+In the difference between male and female patients, we saw in fig. \ref{fig:KM_sex} that female patients seemed to survive a bit longer than male patients. But from tab. \ref{tab:logrank} we see that we get a statistic $\chi^2 = 3.5$ and $p=0.06$. This means the $p$ is a bit too large for us to say that it is significant. Thus we cannot conclude that there is a difference between the sexes.
 
 For both ascites and age group we saw in fig. \ref{fig:KM_asc} and \ref{fig:KM_age} that there seems to be a large difference in the survival between the groups. From tab. \ref{tab:logrank} we see for the difference severities of ascites we get $\chi^2 = 69.9$ and $p=7\cdot10^{-16}$, and for different age groups we get $\chi^2 = 50.6$ and $p=1\cdot10^{-11}$. So we conclude that there is a significant difference between the different severities in ascites, and there is a significant difference between the age groups.
 
 
 \subsection{c)}
-We now want to estimate the hazard function given out covariates. This is done with a Cox regression, where we estimate the hazard function as
+We now want to estimate the hazard function given our covariates. This is done with a Cox regression, where we estimate the hazard function as
 \begin{equation}
 h(t|x_1,...,x_p) = h_0(t)\exp(\beta_1 x_1 + ... + \beta_p x_p),
 \end{equation}
