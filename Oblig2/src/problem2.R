@@ -1,7 +1,5 @@
 olympic=read.table("http://www.uio.no/studier/emner/matnat/math/STK4900/v17/olympic.txt",sep="\t",header=TRUE)
 
-plot(olympic)
-
 #a)
 
 
@@ -10,6 +8,10 @@ plot(olympic)
 fit.pop.gdp.96 = glm(Total2000~offset(Log.athletes)+Log.population + GDP.per.cap + Total1996 ,data=olympic,family=poisson)
 summary(fit.pop.gdp.96)
 
+
+# Model with gdp and total1996
+fit.gdp.96 = glm(Total2000~offset(Log.athletes)+ GDP.per.cap + Total1996 ,data=olympic,family=poisson)
+summary(fit.gdp.96)
 
 
 # Models with pop and gdp

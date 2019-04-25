@@ -53,11 +53,11 @@ We have a data set where the outcome is whether the female crab has one or more 
 \begin{equation}
 p(x_1,...,x_p) = \frac{\exp(\beta_0 + \beta_1 x_1 + ... + \beta_n x_n)}{1+\exp(\beta_0 + \beta_1 x_1 + ... + \beta_n x_n)},
 \end{equation}
-where $p$ is the desired probability, $x_i$ the covariates and $\beta_i$ their fitted coefficients\todo{Is that the best way to describe  $\beta_i$?}.
+where $p$ is the desired probability, $x_i$ the covariates and $\beta_i$ their fitted coefficients.
 
 \subsection{b)}
 
-We want to find the odds ratio between crabs that differ with one centimetre in with. We know that with width as the only covariate, we define the odds as 
+We want to find the odds ratio between crabs that differ with one centimetre in width. We know that with width as the only covariate, we define the odds as 
 
 \begin{equation}
 \frac{p(x)}{1-p(x)} = \exp(\beta_0 + \beta_1 x).
@@ -87,7 +87,7 @@ OR = \exp(0.4972) = 1.64.
 \end{equation}
 This means that odds of a female crab having satellite males increase by $64\%$ if the width of female increases by $1$ cm.
 
-If $p(1) = p(x+1)$ and $p(0)=p(x)$ are small, we can approximate the odds ratio with the relative risk $RR = p(1)/p(0)$. In this case we have that $p(1) = 6.8\cdot 10^{-6}$ and $p(0) = 4.1 \cdot 10^{-6}$, which means that both are very small. This means that we can assume that $RR \approx OR$. And comparing them $OR = 1.6367$ and $RR = 1.6487$ we see that this is correct.
+If $p(1) = p(x+1)$ and $p(0)=p(x)$ are small, we can approximate the odds ratio with the relative risk $RR = p(1)/p(0)$. In this case we have that $p(1) = 6.8\cdot 10^{-6}$ and $p(0) = 4.1 \cdot 10^{-6}$, which means that both are very small. This means that we can assume that $RR \approx OR$. And comparing $OR = 1.6367$ and $RR = 1.6487$ we see that this is correct.
 
 Since we know that 
 \begin{equation}
@@ -147,7 +147,7 @@ In table \ref{tab:crabs_each} we see one model for each of the covariates. We ca
 
 For spines there seems to be no difference in the condition of the females spine. 
 
-For color, the effects are mostly insignificant, except for color category $4$, which corresponds to a dark colouration. It there for seems that if the female crab is dark, contrary to light which is the default color, the odds ratio is $OR = \exp(-1.86) = 0.156$, meaning that the odds of a dark female crab having satellites are only $15\%$ of that of a light female crab 
+For color, the effects are mostly insignificant, except for color category $4$, which corresponds to a dark colouration. Thus it seems that if the female crab is dark, contrary to light which is the default color, the odds ratio is $OR = \exp(-1.86) = 0.156$, meaning that the odds of a dark female crab having satellites are only $15\%$ of that of a light female crab 
 
 So it seems that the most significant covariates are width and weight, and if the female crab is dark or light.
 
@@ -175,7 +175,7 @@ We will now try to fit a model with all of covariates used above.
 \caption{Summary of the model fitted with width, weight, color and spine as covariates.}\label{tab:crabs_all}
 \end{table}
 
-The resulting model can be found in table \ref{tab:crabs_all}. We see that even though width, weight and one color were significant, none of the covariates are significant anymore. This means that we cant remove any of the covariates with the reason that they are insignificant here. Instead of just looking at the summary of the fitted model to find the significant covariates, we can do an ANOVA on the full model. With the ANOVA we can find out if we can reject the null hypothesis that the coefficient for a given covariate is zero ($H_0: \beta_i = 0$). In other words, we can check if a covariate is a main effect. From table \ref{tab:crabs_anova} we see that weight, with a p-value of $p= 4.3\cdot 10^{-8}$, is the only covariates that seems to be a main effect of the model. We also see that color, with a p-value of $p= 0.055$, is close to being significant, but is right above our cut off.
+The resulting model can be found in table \ref{tab:crabs_all}. We see that even though width, weight and one color were significant, none of the covariates are significant anymore. This means that we can't remove any of the covariates with the reason that they are insignificant here. Instead of just looking at the summary of the fitted model to find the significant covariates, we can do an ANOVA on the full model. With the ANOVA we can find out if we can reject the null hypothesis that the coefficient for a given covariate is zero ($H_0: \beta_i = 0$). In other words, we can check if a covariate contribute to the outcome. From table \ref{tab:crabs_anova} we see that weight, with a p-value of $p= 4.3\cdot 10^{-8}$, is the only covariates that seems to be a main effect of the model. We also see that color, with a p-value of $p= 0.055$, is close to being significant, but is right above our cut off.
 
 
 \begin{table}[!htb]
@@ -219,10 +219,10 @@ But we saw that on their own both weight and width were good predictors of y, bu
 \caption{The figure shows that we can describe the width of the crabs as a linear function of the weight of the crabs.}\label{fig:crabs_width_weight}
 \end{figure}
 
-To try to find out why width and weight are insignificant we try to plot them against eachother. From fig. \ref{fig:crabs_width_weight} we observe that we can describe the width of the female crabs as a linear function of the weight of the crabs. This means that we have one covariate, weight, that describes an other covariate, width, as well as the outcome. This means that we have confounding. This describes why only weight was significant in tab. \ref{tab:crabs_anova}, since width was described by weight and did not bring anything new to the model. In fact: If we change the order of the covariates in the model, so that width is before weight, the result would be reversed, with width being significant and weight not. This means that we only need one of these covariates in our model. So the chance of a female crab having satellites is best described with one covariate: Either width or weight. \todo{Read over since this was rewritten twice and may not make sense...}
+To try to find out why width and weight are insignificant we try to plot them against eachother. From fig. \ref{fig:crabs_width_weight} we observe that we can describe the width of the female crabs as a linear function of the weight of the crabs. This means that we have one covariate, weight, that describes an other covariate, width, as well as the outcome. This point to confounding. This describes why only weight was significant in tab. \ref{tab:crabs_anova}, since width was described by weight and did not bring anything new to the model. In fact: If we change the order of the covariates in the model, so that width is before weight, the result would be reversed, with width being significant and weight not. This means that we only need one of these covariates in our model. So the chance of a female crab having satellites is best described with one covariate: Either width or weight.
 
 \subsection{e)}
-We now want to check if there is interaction between the covariates. We will do this by fitting a full model with pairwise interaction terms. In table \ref{tab:crabs_interaction} we see that none of the interaction terms have coefficients significantly different from zero. The only covariate we can say is has an effect is, again, weight. We see that once more color, as well as the interaction term between color and weight, is close to significant, but again above our cut off. So there is no interaction in our data. 	
+We now want to check if there is interaction between the covariates. We will do this by fitting a full model with pairwise interaction terms, and doing an ANOVA on this model. In table \ref{tab:crabs_interaction} we see that none of the interaction terms have coefficients significantly different from zero. The only covariate we can say is has an effect is, again, weight. We see that once more color, as well as the interaction term between color and weight, is close to significant, but again above our cut off. So there is no interaction in our data. 	
 
 \begin{table}[ht]
 \centering
@@ -266,7 +266,7 @@ It is this model we want to fit to the medal counts. But there is something we h
 E[Y_i] = w_i \lambda_i = w_i\exp(\beta_0 + \beta_1 x_{1,i} + ... + \beta x_{p,i}) = \exp(\log(w_i) + \beta_0 + \beta_1 x_{1,i} + ... + \beta x_{p,i}).
 \end{equation}
 
-This means that to compensate for this imbalance of athletes, we can fit out model with $\log(w_i)$ as a covariate. This is what we call an offset. This we already $Log.athletes$ in our data, we can just use this as the offset in our regression.
+This means that to compensate for this imbalance of athletes, we can fit out model with $\log(w_i)$ as a covariate. This is what we call an offset. Since we already $Log.athletes$ in our data, we can just use this as the offset in our regression.
 
 \subsection{b)}
 We will try to find the best model by first fitting a model with all the variables as covariates. 
@@ -303,7 +303,7 @@ From table\ref{tab:ol_full_it} we see the summary of the fit with all covariate.
 \caption{Summary of our first attempt of the best model, with GDP per capita and medals won in the 1996 Olympic games as covariates.}\label{tab:ol_96_gdp}
 \end{table}
 
-But if we instead try to build this model from the ground up we see something interesting with just athletes and GDP per capita as covariates, we see something else\todo{Skriv om!}. From tab. \ref{tab:ol_pop_gdp} we see that without the number of medals from 1996, we see that, contrary to tab. \ref{tab:ol_full_it}, the population is significant, while GDP per capita is not. So something is happening here...
+But if we instead try to fit this model with just logarithmic population and GDP per capita as covariates, we get a different result. From tab. \ref{tab:ol_pop_gdp} we see that without the number of medals from 1996, we get that, contrary to tab. \ref{tab:ol_full_it}, the population is significant, while GDP per capita is not. So something is happening here...
 
 \begin{table}[!htb]
 \centering
@@ -319,7 +319,7 @@ But if we instead try to build this model from the ground up we see something in
 \caption{Model using logarithm of the population of the nation and GDP per capita as covariates.}\label{tab:ol_pop_gdp}
 \end{table}
 
-I think that this model is more correct than that of tab. \ref{tab:ol_96_gdp}. This is because the medal count of 1996, have more or less the same dependence of population and GDP per capita as the medal count from 2000. \todo{Maybe show this dependency?} The medal count of 2000 is also very correlated with that of 1996 \todo{Show this?}, which is expected, since a nation has many of the same athletes and causing factors as they had 4 years ago. This means that if we use $Total1996$ as a covariates for the medal count in 2000, the dependency on $Log.population$ is hidden inside $Total1996$, thus making $Log.population$ seem insignificant. Why it enhances GDP per capita, I don't know. So why shouldn't we just $Total1996$? This is like forecasting the weather tomorrow by saying it is the same as today: You will most likely be right, but it doesn't explain anything. So if we ignore $Total1996$, and using tab. \ref{tab:ol_pop_gdp} we find our final model by noting that GDP per capita is insignificant, and end up tab. \ref{tab:ol_pop} as our final model.
+I think that this model is more correct than that of tab. \ref{tab:ol_96_gdp}. This is because the medal count of 1996 have more or less the same dependence of population and GDP per capita as the medal count from 2000.\footnote{Not shown here}. The medal count of 2000 is also very correlated with that of 1996, which is expected, since a nation has many of the same athletes and causing factors as they had 4 years before. This means that if we use $Total1996$ as a covariates for the medal rate in 2000, the dependency on $Log.population$ may be hidden inside $Total1996$, thus making $Log.population$ seem insignificant. Why it enhances GDP per capita, I don't know. So why shouldn't we just $Total1996$? This is like forecasting the weather tomorrow by saying it is the same as today: You will most likely be right, but it doesn't explain anything. So if we ignore $Total1996$, and using tab. \ref{tab:ol_pop_gdp} we find our final model by noting that GDP per capita is insignificant, and end up tab. \ref{tab:ol_pop}.
 
 
 \begin{table}[!htb]
@@ -343,7 +343,7 @@ RR = \exp(\beta) = \exp(0.18212) = 1.199758,
 
 meaning that the rate of medals won increases by $20\%$.
 
-This model partly confirm the initial statement from the exercise: Large nations will win more medals, but their wealth is insignificant for the medal count.
+This model partly confirm the initial statement from the exercise: Large nations will win more medals, but their wealth is insignificant for the medal rate per athlete.
 
 \section{Problem 3}
 
@@ -368,7 +368,7 @@ Looking at fig. \ref{fig:KM_sex} we can clearly see that male patients has a low
 
 For the ascites, fig. \ref{fig:KM_asc}, the difference in the severity of the fluid buildup seems to have a large impact on the survival of the patients. There is a clear decrease in survival for a patient with slight ascites compared with one with none, and an even wore decrease if the patient has marked ascites.
 
-The same clear difference can be seen in the estimated survival of the groups with different ages, fig. \ref{fig:KM_age}. The survival of the decreases drastically with the increase in age.
+The same clear difference can be seen in the estimated survival of the groups with different ages, fig. \ref{fig:KM_age}. The older a patient is, the shorter they tend to survive.
 
 
 \subsection{b)}
@@ -378,7 +378,6 @@ We have seen above that there is some difference in all the $K$ different groups
 \begin{equation}
 \chi^2_i = \frac{(O_i - E_i)^2}{se(O_i-E_i)}.
 \end{equation}
-
 This follows a $\chi^2$ distribution with $K-1$ degrees of freedom.
 
 \begin{table}[!htb]
@@ -409,7 +408,7 @@ agegr=0 & $80$ & $26$ &  $58.7$&  $18.18$&  $22.87$ \\
 agegr=1 & $250$ & $148$ &  $162.0$&  $1.21$&  $2.72$ \\
 agegr=2 & $158$ & $118$ &  $71.3$&  $30.51$&  $40.87$ \\
 \hline\\
-Ascites & \multicolumn{5}{l}{Chisq= 50.6  on 2 degrees of freedom, p= 1e-11}\\
+Age Group & \multicolumn{5}{l}{Chisq= 50.6  on 2 degrees of freedom, p= 1e-11}\\
 \end{tabular}
 \caption{Table showing logrank tests for the different groups.}\label{tab:logrank}
 \end{table}
@@ -419,7 +418,7 @@ Table \ref{tab:logrank} shows us the logrank tests for the different covariates 
 
 In the difference between male and female patients, we see in fig. \ref{fig:KM_sex} there female patients seemed to have a bit longer than male patients. But from tab. \ref{tab:logrank} we see that we get a statistic $\chi^2 = 3.5$ and $p=0.06$. This means the $p$ is a bit too large for us to say that it is significant. Thus we cannot conclude that there is a difference between the sexes.
 
-Fro both ascites and age group we saw in fig. \ref{fig:KM_asc} and \ref{fig:KM_age} that there seems to be a large difference in the survival between the groups. From tab. \ref{tab:logrank} we see for the difference severities of ascites we get $\chi^2 = 69.9$ and $p=7\cdot10^{-16}$, and for different age groups we get $\chi^2 = 50.6$ and $p=1\cdot10^{-11}$. So we conclude that there is a significant difference between the different severities in ascites, and there is a significant difference between the age groups.
+For both ascites and age group we saw in fig. \ref{fig:KM_asc} and \ref{fig:KM_age} that there seems to be a large difference in the survival between the groups. From tab. \ref{tab:logrank} we see for the difference severities of ascites we get $\chi^2 = 69.9$ and $p=7\cdot10^{-16}$, and for different age groups we get $\chi^2 = 50.6$ and $p=1\cdot10^{-11}$. So we conclude that there is a significant difference between the different severities in ascites, and there is a significant difference between the age groups.
 
 
 \subsection{c)}
@@ -448,7 +447,7 @@ factor(sex)1 & 0.46 & 1.59 & 0.13 & 3.68 & 0.000236 \\
 \caption{Table showing a part of the summary of the Cox regression, with the exponent of the coefficients included.}\label{tab:cox}
 \end{table}
 
-Table \ref{tab:cox} shows the result of the Cox regression. We see that once again the severity of ascites and age have significant effects on the hazard, with both increase in severity and age leading to an increase in hazard. Contrary to our logrank test, where sex did not have a significant effect on survival, we see that sex have a significant effect on the hazard, with male patients having a larger hazard.\todo{Quantify the increases and decreases}
+Table \ref{tab:cox} shows the result of the Cox regression. We see that once again the severity of ascites and age have significant effects on the hazard, with both increase in severity and age leading to an increase in hazard. Contrary to our logrank test, where sex did not have a significant effect on survival, we see that sex have a significant effect on the hazard, with male patients having a larger hazard.
 
 We can find the hazard ratio for men versus women by observing that
 
@@ -459,14 +458,20 @@ This means that the hazard increases with $59\%$ if the patient is male. Since
 \begin{equation}
 z = \frac{\beta_i}{se(\beta_i)}
 \end{equation}
-is close to normally distributed, we can find the $95\%$ confidence interval for this hazard ratio as $\exp(\beta_i) \pm \exp(1.96\cdot se(\beta_i))$, which gives us the interval
+is close to normally distributed, we can find the $95\%$ confidence interval for this hazard ratio as $\exp(\beta_i \pm 1.96\cdot se(\beta_i))$, which gives us the interval
 \begin{equation}
 CI = (1.241,2.03).
 \end{equation}
 This means that $1$ is not in the interval, meaning that the increase in hazard is significant.
 
+Using the hazard ratio, we can also quantify the results in table \ref{tab:cox}. We see that for ascites: Slight ascites increases the hazard by $\exp(0.6) = 1.83 \Rightarrow 83 \%$, while marked ascites increases hazard by $\exp(1.19) = 3.28 \Rightarrow 228 \%$. As for age, and increase in one year will increase the hazard by $\exp(0.05) = 1.05 \Rightarrow 5\%$.
+
+
 From \ref{tab:logrank} and \ref{tab:cox} we can conclude that while ascites and age have a significant effect on the hazard and survival function and age a significant effect on the hazard effect, we see that whether the patient receives prednisone or a placebo have no significant effect on neither the survival function nor the hazard function.
 
+
+\section*{Remark}
+I have collaborated with \textit{Simon Millerjord}. This is especially true for the R code, and plots!
 
 
 \newpage
